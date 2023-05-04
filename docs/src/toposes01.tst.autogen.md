@@ -5,22 +5,19 @@ julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
 julia> true
 true
 
-julia> LTI = LawvereTierneyLocalModalityOperators( SkeletalFinSets );
+julia> a = FinSet( 3 )
+|3|
 
-julia> Perform( LTI, Display )
-[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
-[ 0, 1 ] ⱶ[ 1, 1 ]→ [ 0, 1 ]
+julia> b = FinSet( 4 )
+|4|
 
-julia> LTS = LawvereTierneySubobjects( SkeletalFinSets );
+julia> f = MapOfFinSets( a, [ 0, 1, 1 ], b )
+|3| → |4|
 
-julia> Perform( LTS, Display )
-[ 0 ] ⱶ[ 1 ]→ [ 0, 1 ]
-[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
+julia> Pf = PowerObjectFunctorial( f )
+|16| → |8|
 
-julia> LTC = LawvereTierneyEmbeddingsOfSubobjectClassifiers( SkeletalFinSets );
-
-julia> Perform( LTC, Display )
-[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
-[ 0 ] ⱶ[ 1 ]→ [ 0, 1 ]
+julia> Display( Pf )
+[ 0,..., 15 ] ⱶ[ 0, 1, 6, 7, 0, 1, 6, 7, 0, 1, 6, 7, 0, 1, 6, 7 ]→ [ 0,..., 7 ]
 
 ```
