@@ -60,7 +60,7 @@ AddCategoricalProperty( [ "IsElementaryTopos", fail ] );
 
 CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
   SortedList(
-          Concatenation( [
+          @Concatenation( [
                   "SubobjectClassifier",
                   "ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier",
                   #"TruthMorphismOfTrueWithGivenObjects", ## derived from SubobjectClassifier & ClassifyingMorphismOfSubobjectWithGiven... & IdentityMorphism

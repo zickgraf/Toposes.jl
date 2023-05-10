@@ -51,7 +51,7 @@ InstallMethod( @__MODULE__,  DotVertexLabelledDigraph,
     
   for i in DigraphVertices( D )
       for j in out[i]
-          Append( str, Concatenation( StringGAP( i ), " -> ", StringGAP( j ), " [arrowsize=0.5]\n" ) );
+          Append( str, @Concatenation( StringGAP( i ), " -> ", StringGAP( j ), " [arrowsize=0.5]\n" ) );
       end;
   end;
   

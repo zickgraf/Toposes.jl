@@ -168,7 +168,7 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
     local Rel;
     
     ##
-    Rel = CreateCapCategory( Concatenation( "CategoryOfRelations( ", Name( C ), " )" ), IsCategoryOfRelations, IsObjectInCategoryOfRelations, IsMorphismInCategoryOfRelations, IsCapCategoryTwoCell );
+    Rel = CreateCapCategory( @Concatenation( "CategoryOfRelations( ", Name( C ), " )" ), IsCategoryOfRelations, IsObjectInCategoryOfRelations, IsMorphismInCategoryOfRelations, IsCapCategoryTwoCell );
     
     ## In order to have composition ⥉ Rel we need C to have fiber products
     ## In order to replace the span with a single morphism ⥉ C we need C to have products
@@ -479,7 +479,7 @@ InstallMethod( @__MODULE__,  ViewString,
         
   function( a )
     
-    return Concatenation( "An object ⥉ the category of relations given by: ", ViewString( ObjectDatum( a ) ) );
+    return @Concatenation( "An object ⥉ the category of relations given by: ", ViewString( ObjectDatum( a ) ) );
     
 end );
 
@@ -489,6 +489,6 @@ InstallMethod( @__MODULE__,  DisplayString,
         
   function( a )
     
-    return Concatenation( DisplayString( ObjectDatum( a ) ), "\nAn object ⥉ the category of relations given by the above data" );
+    return @Concatenation( DisplayString( ObjectDatum( a ) ), "\nAn object ⥉ the category of relations given by the above data" );
     
 end );
