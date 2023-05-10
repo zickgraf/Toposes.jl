@@ -2,6 +2,8 @@ __precompile__(false)
 
 module Toposes
 
+@nospecialize
+
 import Base./
 
 using CAP
