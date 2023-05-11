@@ -182,7 +182,7 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
     
     ##
     Rel.compiler_hints =
-      rec( category_attribute_names =
+      @rec( category_attribute_names =
            [ "UnderlyingCategory",
              ],
            );

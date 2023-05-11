@@ -101,10 +101,10 @@ CapJitAddTypeSignature( "UnderlyingSpan", [ IsMorphismInCategoryOfRelations ],
     
     C = UnderlyingCategory( input_types[1].category );
     
-    return rec( filter = IsNTuple,
+    return @rec( filter = IsNTuple,
                 element_types =
                 [ CapJitDataTypeOfObjectOfCategory( C ),
-                  rec( filter = IsNTuple,
+                  @rec( filter = IsNTuple,
                        element_types =
                        [ CapJitDataTypeOfMorphismOfCategory( C ),
                          CapJitDataTypeOfMorphismOfCategory( C ) ] ) ] );

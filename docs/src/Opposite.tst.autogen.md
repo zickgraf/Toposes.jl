@@ -15,7 +15,7 @@ julia> Length( ListInstalledOperationsOfCategory( BooleanAlgebras ) )
 julia> Opposite( BooleanAlgebras )
 SkeletalFinSets
 
-julia> FS = Opposite( WrapperCategory( BooleanAlgebras, rec( ) ) )
+julia> FS = Opposite( WrapperCategory( BooleanAlgebras, @rec( ) ) )
 Opposite( WrapperCategory( Opposite( SkeletalFinSets ) ) )
 
 julia> Length( ListInstalledOperationsOfCategory( FS ) )

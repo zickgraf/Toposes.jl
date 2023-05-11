@@ -18,7 +18,7 @@ AddDerivationToCAP( IsHomSetInhabited,
     return !IsInitial( range_cat,
                    HomomorphismStructureOnObjects( cat, a, b ) );
     
-end; CategoryGetters = rec( range_cat = RangeCategoryOfHomomorphismStructure ),
+end; CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
 CategoryFilter = function( cat )
       return HasRangeCategoryOfHomomorphismStructure( cat ) &&
              IsBoundGlobal( "IsCategoryOfSkeletalFinSets" ) &&
@@ -510,7 +510,7 @@ AddDerivationToCAP( MorphismsOfExternalHom,
                          phi ) );
     
 end,
-  CategoryGetters = rec( range_cat = RangeCategoryOfHomomorphismStructure ),
+  CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
   CategoryFilter = HasRangeCategoryOfHomomorphismStructure );
 
 ##
@@ -766,7 +766,7 @@ AddDerivationToCAP( HomomorphismStructureOnMorphismsWithGivenObjects,
                                  r ) ) );
     
 end,
-  CategoryGetters = rec( range_cat = RangeCategoryOfHomomorphismStructure ),
+  CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
   CategoryFilter = cat -> HasRangeCategoryOfHomomorphismStructure( cat ) );
 
 ## Final derivations
