@@ -284,14 +284,226 @@ AddDerivationToCAP( SingletonMorphismWithGivenPowerObject,
 end );
 
 ##
-AddDerivationToCAP( SingletonMorphism,
+AddDerivationToCAP( IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects,
                     "",
-                    [ [ SingletonMorphismWithGivenPowerObject, 1 ],
-                      [ PowerObject, 1 ] ],
+                    [ [ SubobjectClassifier, 1 ],
+                      [ CartesianSquareOfSubobjectClassifier, 1 ],
+                      [ PowerObject, 1 ],
+                      [ IdentityMorphism, 2 ],
+                      [ ProjectionInFactorOfDirectProductWithGivenDirectProduct, 2 ],
+                      [ ExponentialOnMorphismsWithGivenExponentials, 2 ],
+                      [ UniversalMorphismIntoDirectProductWithGivenDirectProduct, 1 ] ],
                     
-  function( cat, obj )
+  function( cat, Exp_a_Omega2, a, PaxPa )
+    local Omega, diagram, Omega2, Pa, tau, u;
     
-    return SingletonMorphismWithGivenPowerObject( cat, obj, PowerObject( cat, obj ) );
+    Omega = SubobjectClassifier( cat );
+    
+    diagram = [ Omega, Omega ];
+    
+    Omega2 = CartesianSquareOfSubobjectClassifier( cat );
+
+    Pa = PowerObject( cat, a );
+    
+    ## [ Exp(a, π₁): Exp(a, Ω²) ↠ Exp(a, Ω), Exp(a, π₂): Exp(a, Ω²) ↠ Exp(a, Ω) ]
+    tau = [ ExponentialOnMorphismsWithGivenExponentials( cat,
+                   Exp_a_Omega2,
+                   IdentityMorphism( cat, a ),
+                   ProjectionInFactorOfDirectProductWithGivenDirectProduct( cat,
+                           diagram,
+                           1,
+                           Omega2 ),
+                   Pa ),
+             ExponentialOnMorphismsWithGivenExponentials( cat,
+                   Exp_a_Omega2,
+                     IdentityMorphism( cat, a ),
+                   ProjectionInFactorOfDirectProductWithGivenDirectProduct( cat,
+                           diagram,
+                           2,
+                           Omega2 ),
+                   Pa ) ];
+    
+    ## Exp(a, Ω²) ⭇ Exp(a, Ω) × Exp(a, Ω)
+    u = UniversalMorphismIntoDirectProductWithGivenDirectProduct( cat,
+                 [ Pa, Pa ],
+                 Exp_a_Omega2,
+                 tau,
+                 PaxPa );
+    
+    #% CAP_JIT_DROP_NEXT_STATEMENT
+    if HasIsCartesianClosedCategory( cat ) && IsCartesianClosedCategory( cat )
+        SetIsIsomorphism( u, true );
+    end;
+    
+    return u;
+    
+end );
+
+##
+AddDerivationToCAP( RelativeTruthMorphismOfTrueWithGivenObjects,
+                    "",
+                    [ [ ExponentialOnMorphismsWithGivenExponentials, 1 ],
+                      [ IdentityMorphism, 1 ],
+                      [ TruthMorphismOfTrue, 1 ] ],
+                    
+  function( cat, T, a, Pa )
+    
+    return ExponentialOnMorphismsWithGivenExponentials( cat,
+                   T,
+                   IdentityMorphism( cat, a ),
+                   TruthMorphismOfTrue( cat ),
+                   Pa );
+    
+end );
+
+##
+AddDerivationToCAP( RelativeTruthMorphismOfFalseWithGivenObjects,
+                    "",
+                    [ [ ExponentialOnMorphismsWithGivenExponentials, 1 ],
+                      [ IdentityMorphism, 1 ],
+                      [ TruthMorphismOfFalse, 1 ] ],
+                    
+  function( cat, T, a, Pa )
+    
+    return ExponentialOnMorphismsWithGivenExponentials( cat,
+                   T,
+                   IdentityMorphism( cat, a ),
+                   TruthMorphismOfFalse( cat ),
+                   Pa );
+    
+end );
+
+##
+AddDerivationToCAP( RelativeTruthMorphismOfNotWithGivenObjects,
+                    "",
+                    [ [ ExponentialOnMorphismsWithGivenExponentials, 1 ],
+                      [ IdentityMorphism, 1 ],
+                      [ TruthMorphismOfNot, 1 ] ],
+                    
+  function( cat, Pa, a, Pa1 )
+    
+    return ExponentialOnMorphismsWithGivenExponentials( cat,
+                   Pa,
+                   IdentityMorphism( cat, a ),
+                   TruthMorphismOfNot( cat ),
+                   Pa1 );
+    
+end );
+
+##
+AddDerivationToCAP( RelativeTruthMorphismOfAndWithGivenObjects,
+                    "",
+                    [ [ CartesianSquareOfSubobjectClassifier, 1 ],
+                      [ ExponentialOnObjects, 1 ],
+                      [ IdentityMorphism, 1 ],
+                      [ TruthMorphismOfAnd, 1 ],
+                      [ ExponentialOnMorphismsWithGivenExponentials, 1 ],
+                      [ IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects, 1 ],
+                      [ InverseForMorphisms, 1 ],
+                      [ PreCompose, 1 ] ],
+                      
+  function( cat, PaxPa, a, Pa )
+    local Omega2, Exp_a_Omega2, Exp_a_mor, u;
+    
+    Omega2 = CartesianSquareOfSubobjectClassifier( cat );
+    
+    Exp_a_Omega2 = ExponentialOnObjects( cat, a, Omega2 );
+
+    ## Exp(a, ∧): Exp(a, Ω²) → Exp(a, Ω)
+    Exp_a_mor = ExponentialOnMorphismsWithGivenExponentials( cat,
+                         Exp_a_Omega2,
+                         IdentityMorphism( cat, a ),
+                         TruthMorphismOfAnd( cat ),
+                         Pa );
+    
+    ## Exp(a, Ω²) ⭇ Exp(a, Ω) × Exp(a, Ω)
+    u = IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects( cat,
+                 Exp_a_Omega2,
+                 a,
+                 PaxPa );
+    
+    ## Exp(a, Ω) × Exp(a, Ω) → Exp(a, Ω)
+    return PreCompose( cat,
+                   InverseForMorphisms( cat, u ),
+                   Exp_a_mor );
+    
+end );
+
+##
+AddDerivationToCAP( RelativeTruthMorphismOfOrWithGivenObjects,
+                    "",
+                    [ [ CartesianSquareOfSubobjectClassifier, 1 ],
+                      [ ExponentialOnObjects, 1 ],
+                      [ IdentityMorphism, 1 ],
+                      [ TruthMorphismOfOr, 1 ],
+                      [ ExponentialOnMorphismsWithGivenExponentials, 1 ],
+                      [ IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects, 1 ],
+                      [ InverseForMorphisms, 1 ],
+                      [ PreCompose, 1 ] ],
+                      
+  function( cat, PaxPa, a, Pa )
+    local Omega2, Exp_a_Omega2, Exp_a_mor, u;
+    
+    Omega2 = CartesianSquareOfSubobjectClassifier( cat );
+    
+    Exp_a_Omega2 = ExponentialOnObjects( cat, a, Omega2 );
+
+    ## Exp(a, ∨): Exp(a, Ω²) → Exp(a, Ω)
+    Exp_a_mor = ExponentialOnMorphismsWithGivenExponentials( cat,
+                         Exp_a_Omega2,
+                         IdentityMorphism( cat, a ),
+                         TruthMorphismOfOr( cat ),
+                         Pa );
+    
+    ## Exp(a, Ω²) ⭇ Exp(a, Ω) × Exp(a, Ω)
+    u = IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects( cat,
+                 Exp_a_Omega2,
+                 a,
+                 PaxPa );
+    
+    ## Exp(a, Ω) × Exp(a, Ω) → Exp(a, Ω)
+    return PreCompose( cat,
+                   InverseForMorphisms( cat, u ),
+                   Exp_a_mor );
+    
+end );
+
+##
+AddDerivationToCAP( RelativeTruthMorphismOfImpliesWithGivenObjects,
+                    "",
+                    [ [ CartesianSquareOfSubobjectClassifier, 1 ],
+                      [ ExponentialOnObjects, 1 ],
+                      [ IdentityMorphism, 1 ],
+                      [ TruthMorphismOfImplies, 1 ],
+                      [ ExponentialOnMorphismsWithGivenExponentials, 1 ],
+                      [ IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects, 1 ],
+                      [ InverseForMorphisms, 1 ],
+                      [ PreCompose, 1 ] ],
+                      
+  function( cat, PaxPa, a, Pa )
+    local Omega2, Exp_a_Omega2, Exp_a_mor, u;
+    
+    Omega2 = CartesianSquareOfSubobjectClassifier( cat );
+    
+    Exp_a_Omega2 = ExponentialOnObjects( cat, a, Omega2 );
+
+    ## Exp(a, ⇒): Exp(a, Ω²) → Exp(a, Ω)
+    Exp_a_mor = ExponentialOnMorphismsWithGivenExponentials( cat,
+                         Exp_a_Omega2,
+                         IdentityMorphism( cat, a ),
+                         TruthMorphismOfImplies( cat ),
+                         Pa );
+    
+    ## Exp(a, Ω²) ⭇ Exp(a, Ω) × Exp(a, Ω)
+    u = IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects( cat,
+                 Exp_a_Omega2,
+                 a,
+                 PaxPa );
+    
+    ## Exp(a, Ω) × Exp(a, Ω) → Exp(a, Ω)
+    return PreCompose( cat,
+                   InverseForMorphisms( cat, u ),
+                   Exp_a_mor );
     
 end );
 
@@ -613,62 +825,60 @@ end );
 ##
 AddDerivationToCAP( HasPushoutComplement,
                     "",
-                    [ [ ObjectConstructor, 3 ],
-                      [ PreCompose, 2 ],
-                      [ EmbeddingOfRelativePseudoComplementSubobject, 1 ],
-                      [ PreComposeList, 2 ],
-                      [ IsEqualAsSubobjects, 1 ],
+                    [ [ EmbeddingOfRelativePseudoComplementSubobject, 1 ],
                       [ EmbeddingOfUnionSubobject, 2 ],
+                      [ FiberProduct, 7 ],
+                      [ IdentityMorphism, 4 ],
+                      [ ImageEmbedding, 6 ],
                       [ IsDominating, 1 ],
-                      [ IdentityMorphism, 1 ] ],
+                      [ IsEqualAsSubobjects, 1 ],
+                      [ PreCompose, 14 ],
+                      [ ProjectionInFactorOfFiberProductWithGivenFiberProduct, 14 ],
+                      [ UniversalMorphismIntoDirectProduct, 6 ],
+                      [ UniversalMorphismIntoTerminalObject, 3 ] ],
                     
-  function( cat, f, x )
-    local Rel, xx, x_i, A, Omega_A, ff, f_i, Omega_X, x_i_Omega_A, rpc, Omega_D, PC1, PC2;
-    
-    ## Implement condition (PC.1) ⥉ [Kawahara 90, Theorem 3.6]
-    
-    Rel = CategoryOfRelations( cat );
-    
-    xx = AsMorphismInCategoryOfRelations( Rel, x );
-    
-    x_i = PseudoInverse( Rel, xx );
-    
-    A = Source( x );
-    
-    Omega_A = MaximalRelationIntoTerminalObject( Rel, ObjectConstructor( Rel, A ) );
-    
-    ff = AsMorphismInCategoryOfRelations( Rel, f );
-    
-    f_i = PseudoInverse( Rel, ff );
-    
-    Omega_X = MaximalRelationIntoTerminalObject( Rel, ObjectConstructor( Rel, Source( f ) ) );
-    
-    x_i_Omega_A = PreCompose( Rel, x_i, Omega_A );
-    
-    rpc = EmbeddingOfRelativePseudoComplementSubobject( cat, ## this is the only line ⥉ which we need relativ pseudo-complements
-                      EmbeddingOfRelationInDirectProduct( Rel, x_i_Omega_A ),
-                      EmbeddingOfRelationInDirectProduct( Rel, PreComposeList( Rel, [ x_i, f_i, Omega_X ] ) ) );
-    
-    Omega_D = MaximalRelationIntoTerminalObject( Rel, ObjectConstructor( Rel, Range( x ) ) );
-    
-    PC1 =
-      IsEqualAsSubobjects( cat,
-              EmbeddingOfUnionSubobject( cat, ## already exists ⥉ categories with coproducts
-                      EmbeddingOfRelationInDirectProduct( Rel, x_i_Omega_A ), rpc ),
-              EmbeddingOfRelationInDirectProduct( Rel, Omega_D ) );
-    
-    if PC1 == false
+  # generated by examples/precompile_derivations_pushout_complement.g
+  function ( cat_1, f_1, x_1 )
+    local deduped_1_1, deduped_2_1, deduped_3_1, deduped_4_1, deduped_5_1, deduped_6_1, deduped_7_1, deduped_8_1, deduped_9_1, deduped_10_1, deduped_11_1, deduped_12_1, deduped_13_1, deduped_14_1, deduped_15_1, deduped_16_1, deduped_17_1, deduped_18_1, deduped_19_1, deduped_20_1, deduped_21_1, deduped_22_1, deduped_23_1, deduped_24_1, deduped_25_1, deduped_26_1, deduped_27_1, deduped_28_1, deduped_29_1, deduped_30_1, deduped_31_1, deduped_32_1, deduped_33_1;
+    deduped_32_1 = Range( x_1 );
+    deduped_31_1 = Source( f_1 );
+    deduped_30_1 = Source( x_1 );
+    deduped_28_1 = UniversalMorphismIntoTerminalObject( cat_1, deduped_32_1 );
+    deduped_27_1 = IdentityMorphism( cat_1, deduped_32_1 );
+    deduped_26_1 = UniversalMorphismIntoTerminalObject( cat_1, deduped_31_1 );
+    deduped_25_1 = IdentityMorphism( cat_1, deduped_31_1 );
+    deduped_24_1 = IdentityMorphism( cat_1, deduped_30_1 );
+    deduped_22_1 = [ deduped_24_1, f_1 ];
+    deduped_21_1 = [ deduped_24_1, deduped_24_1 ];
+    deduped_15_1 = FiberProduct( cat_1, deduped_22_1 );
+    deduped_14_1 = FiberProduct( cat_1, deduped_21_1 );
+    deduped_13_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_21_1, 2, deduped_14_1 ), UniversalMorphismIntoTerminalObject( cat_1, deduped_30_1 ) );
+    deduped_12_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_21_1, 1, deduped_14_1 ), x_1 );
+    deduped_10_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_22_1, 2, deduped_15_1 ), deduped_25_1 ), deduped_25_1 ];
+    deduped_8_1 = FiberProduct( cat_1, deduped_10_1 );
+    deduped_7_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 2, deduped_8_1 ), deduped_26_1 );
+    deduped_6_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 1, deduped_8_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_22_1, 1, deduped_15_1 ), x_1 ) );
+    deduped_5_1 = ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_12_1 ), Range( deduped_13_1 ) ], deduped_14_1, [ deduped_12_1, deduped_13_1 ] ) );
+    if IsEqualAsSubobjects( cat_1, EmbeddingOfUnionSubobject( cat_1, deduped_5_1, EmbeddingOfRelativePseudoComplementSubobject( cat_1, deduped_5_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_6_1 ), Range( deduped_7_1 ) ], deduped_8_1, [ deduped_6_1, deduped_7_1 ] ) ) ) ), ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_27_1 ), Range( deduped_28_1 ) ], deduped_32_1, [ deduped_27_1, deduped_28_1 ] ) ) ) == false
         return false;
+    else
+        deduped_33_1 = [ x_1, x_1 ];
+        deduped_29_1 = FiberProduct( cat_1, deduped_33_1 );
+        deduped_23_1 = [ deduped_25_1, deduped_25_1 ];
+        deduped_20_1 = Source( deduped_24_1 );
+        deduped_19_1 = FiberProduct( cat_1, deduped_23_1 );
+        deduped_18_1 = IdentityMorphism( cat_1, deduped_20_1 );
+        deduped_17_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_33_1, 2, deduped_29_1 ), deduped_24_1 );
+        deduped_16_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_33_1, 1, deduped_29_1 ), deduped_24_1 );
+        deduped_11_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_23_1, 2, deduped_19_1 ), deduped_26_1 ), deduped_26_1 ];
+        deduped_9_1 = FiberProduct( cat_1, deduped_11_1 );
+        deduped_4_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 2, deduped_9_1 ), deduped_25_1 ), deduped_25_1 ];
+        deduped_3_1 = FiberProduct( cat_1, deduped_4_1 );
+        deduped_2_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_4_1, 2, deduped_3_1 ), f_1 );
+        deduped_1_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_4_1, 1, deduped_3_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 1, deduped_9_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_23_1, 1, deduped_19_1 ), f_1 ) ) );
+        return IsDominating( cat_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_16_1 ), Range( deduped_17_1 ) ], deduped_29_1, [ deduped_16_1, deduped_17_1 ] ) ), EmbeddingOfUnionSubobject( cat_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_18_1 ), Range( deduped_24_1 ) ], deduped_20_1, [ deduped_18_1, deduped_24_1 ] ) ), ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_1_1 ), Range( deduped_2_1 ) ], deduped_3_1, [ deduped_1_1, deduped_2_1 ] ) ) ) );
     end;
-    
-    PC2 = IsDominating( cat,
-                   EmbeddingOfRelationInDirectProduct( Rel, PreCompose( Rel, xx, x_i ) ),
-                   EmbeddingOfUnionSubobject( cat, ## already exists ⥉ categories with coproducts
-                           EmbeddingOfRelationInDirectProduct( Rel, AsMorphismInCategoryOfRelations( Rel, IdentityMorphism( cat, A ) ) ),
-                           EmbeddingOfRelationInDirectProduct( Rel, PreComposeList( Rel, [ f_i, Omega_X, PseudoInverse( Rel, Omega_X ), ff ] ) ) ) );
-    
-    return PC2;
-    
+    return;
 end );
 
 ##
@@ -681,56 +891,36 @@ end );
 #  D <--y-- B
 AddDerivationToCAP( PushoutComplement,
                     "",
-                    [ [ ObjectConstructor, 2 ],
-                      [ PreCompose, 2 ],
-                      [ EmbeddingOfRelativePseudoComplementSubobject, 1 ],
-                      [ PreComposeList, 1 ],
+                    [ [ EmbeddingOfRelativePseudoComplementSubobject, 1 ],
+                      [ FiberProduct, 3 ],
+                      [ IdentityMorphism, 2 ],
+                      [ ImageEmbedding, 3 ],
+                      [ PreCompose, 7 ],
                       [ ProjectionInFactorOfDirectProductWithGivenDirectProduct, 1 ],
+                      [ ProjectionInFactorOfFiberProductWithGivenFiberProduct, 6 ],
                       [ TerminalObject, 1 ],
-                      [ IsMonomorphism, 1 ],
-                      [ ImageEmbedding, 1 ] ],
+                      [ UniversalMorphismIntoDirectProduct, 2 ],
+                      [ UniversalMorphismIntoTerminalObject, 2 ] ],
                     
-  function( cat, f, x )
-    local Rel, xx, x_i, A, Omega_A, x_i_Omega_A, ff, f_i, Omega_X, rpc, i, y;
-    
-    Rel = CategoryOfRelations( cat );
-    
-    ## Construct the pushout-complement as ⥉ [Kawahara 90, Theorem 3.6]
-    
-    xx = AsMorphismInCategoryOfRelations( Rel, x );
-    
-    x_i = PseudoInverse( Rel, xx );
-    
-    A = Source( x );
-    
-    Omega_A = MaximalRelationIntoTerminalObject( Rel, ObjectConstructor( Rel, A ) );
-    
-    x_i_Omega_A = PreCompose( Rel, x_i, Omega_A );
-     
-    ff = AsMorphismInCategoryOfRelations( Rel, f );
-    
-    f_i = PseudoInverse( Rel, ff );
-    
-    Omega_X = MaximalRelationIntoTerminalObject( Rel, ObjectConstructor( Rel, Source( f ) ) );
-    
-    rpc = EmbeddingOfRelativePseudoComplementSubobject( cat, ## this is the only line ⥉ which we need relative pseudo-complements
-                   EmbeddingOfRelationInDirectProduct( Rel, x_i_Omega_A ),
-                   EmbeddingOfRelationInDirectProduct( Rel, PreComposeList( Rel, [ x_i, f_i, Omega_X ] ) ) );
-    
-    i = PreCompose( cat,
-                 rpc,
-                 ProjectionInFactorOfDirectProductWithGivenDirectProduct( cat,
-                         [ Range( x ), TerminalObject( cat ) ],
-                         1,
-                         Range( rpc ) ) );
-    
-    #% CAP_JIT_DROP_NEXT_STATEMENT
-    @Assert( 0, IsMonomorphism( cat, i ) );
-    
-    y = ImageEmbedding( cat, i );
-    
-    return y;
-    
+  # generated by examples/precompile_derivations_pushout_complement.g
+  function ( cat_1, f_1, x_1 )
+    local deduped_1_1, deduped_2_1, deduped_3_1, deduped_4_1, deduped_5_1, deduped_6_1, deduped_7_1, deduped_8_1, deduped_9_1, deduped_10_1, deduped_11_1, deduped_12_1, deduped_13_1, deduped_14_1, deduped_15_1;
+    deduped_15_1 = Source( f_1 );
+    deduped_14_1 = Source( x_1 );
+    deduped_13_1 = IdentityMorphism( cat_1, deduped_15_1 );
+    deduped_12_1 = IdentityMorphism( cat_1, deduped_14_1 );
+    deduped_11_1 = [ deduped_12_1, f_1 ];
+    deduped_10_1 = [ deduped_12_1, deduped_12_1 ];
+    deduped_9_1 = FiberProduct( cat_1, deduped_11_1 );
+    deduped_8_1 = FiberProduct( cat_1, deduped_10_1 );
+    deduped_7_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 2, deduped_8_1 ), UniversalMorphismIntoTerminalObject( cat_1, deduped_14_1 ) );
+    deduped_6_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 1, deduped_8_1 ), x_1 );
+    deduped_5_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 2, deduped_9_1 ), deduped_13_1 ), deduped_13_1 ];
+    deduped_4_1 = FiberProduct( cat_1, deduped_5_1 );
+    deduped_3_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_5_1, 2, deduped_4_1 ), UniversalMorphismIntoTerminalObject( cat_1, deduped_15_1 ) );
+    deduped_2_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_5_1, 1, deduped_4_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 1, deduped_9_1 ), x_1 ) );
+    deduped_1_1 = EmbeddingOfRelativePseudoComplementSubobject( cat_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_6_1 ), Range( deduped_7_1 ) ], deduped_8_1, [ deduped_6_1, deduped_7_1 ] ) ), ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_2_1 ), Range( deduped_3_1 ) ], deduped_4_1, [ deduped_2_1, deduped_3_1 ] ) ) );
+    return ImageEmbedding( cat_1, PreCompose( cat_1, deduped_1_1, ProjectionInFactorOfDirectProductWithGivenDirectProduct( cat_1, [ Range( x_1 ), TerminalObject( cat_1 ) ], 1, Range( deduped_1_1 ) ) ) );
 end );
 
 ##
@@ -741,29 +931,33 @@ AddDerivationToCAP( HomomorphismStructureOnMorphismsWithGivenObjects,
                       [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 2 ],
                       [ PreComposeList, 2 ],
                       [ InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects, 2 ],
-                      [ UniversalMorphismFromCoproduct, 1, RangeCategoryOfHomomorphismStructure ] ],
+                      [ UniversalMorphismFromCoproductWithGivenCoproduct, 1, RangeCategoryOfHomomorphismStructure ] ],
                     
-  function( cat, s, alpha, gamma, r )
-    local range_cat, distinguished_object, Ls;
+  function( cat, source, alpha, gamma, range )
+    local range_cat, distinguished_object, Ls, tau;
     
     range_cat = RangeCategoryOfHomomorphismStructure( cat );
     distinguished_object = DistinguishedObjectOfHomomorphismStructure( cat );
     
-    Ls = ExactCoverWithGlobalElements( range_cat, s );
+    Ls = ExactCoverWithGlobalElements( range_cat, source );
     
-    return UniversalMorphismFromCoproduct( range_cat,
-                   r,
-                   List( Ls, mor ->
-                         InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( cat,
-                                 distinguished_object,
-                                 PreComposeList( cat,
-                                         [ alpha,
-                                           InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( cat,
-                                                   Range( alpha ),
-                                                   Source( gamma ),
-                                                   mor ),
-                                           gamma ] ),
-                                 r ) ) );
+    tau = List( Ls, mor ->
+                 InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( cat,
+                         distinguished_object,
+                         PreComposeList( cat,
+                                 [ alpha,
+                                   InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( cat,
+                                           Range( alpha ),
+                                           Source( gamma ),
+                                           mor ),
+                                   gamma ] ),
+                         range ) );
+    
+    return UniversalMorphismFromCoproductWithGivenCoproduct( range_cat,
+                   List( tau, Source ),
+                   range,
+                   tau,
+                   source );
     
 end,
   CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),

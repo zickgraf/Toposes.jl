@@ -159,13 +159,17 @@ InstallMethod( @__MODULE__,  HonestRepresentative,
 end );
 
 ##
-#= comment for Julia
 InstallMethod( @__MODULE__,  CategoryOfRelations,
-        "for a CAP category which is cartesian",
-        [ IsCapCategory && IsCartesianCategory ],
+        [ IsCapCategory ],
         
   function( C )
     local Rel;
+    
+    if !(HasIsCartesianCategory( C ) && IsCartesianCategory( C ))
+        
+        Error( "CategoryOfRelations is !implemented for non-cartesian categories yet" );
+        
+    end;
     
     ##
     Rel = CreateCapCategory( @Concatenation( "CategoryOfRelations( ", Name( C ), " )" ), IsCategoryOfRelations, IsObjectInCategoryOfRelations, IsMorphismInCategoryOfRelations, IsCapCategoryTwoCell );
@@ -393,7 +397,6 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
     return Rel;
     
 end );
-# =#
 
 ##
 InstallMethod( @__MODULE__,  /,
