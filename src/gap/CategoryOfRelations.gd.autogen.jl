@@ -18,12 +18,12 @@
         IsCapCategory );
 
 #! @Description
-#!  The &GAP; category of objects ⥉ a category of relations.
+#!  The &GAP; category of objects in a category of relations.
 @DeclareFilter( "IsObjectInCategoryOfRelations",
         IsCapCategoryObject  );
 
 #! @Description
-#!  The &GAP; category of morphisms ⥉ a category of relations.
+#!  The &GAP; category of morphisms in a category of relations.
 @DeclareFilter( "IsMorphismInCategoryOfRelations",
         IsCapCategoryMorphism );
 
@@ -175,9 +175,9 @@ end );
 ####################################
 
 #! @Description
-#!  The input is a morphsm $\rho$ ⥉ the category of relations.
+#!  The input is a morphsm $\rho$ in the category of relations.
 #!  The output is <C>true</C> if the domain of $\rho$ is an isomorphism.
 #! @Arguments rho
-#! @Returns true || false
+#! @Returns true or false
 @DeclareProperty( "IsHonest",
         IsMorphismInCategoryOfRelations );

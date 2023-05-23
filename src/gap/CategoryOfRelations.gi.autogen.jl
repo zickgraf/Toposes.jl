@@ -4,7 +4,7 @@
 # Implementations
 #
 
-## A morphism ⥉ the category of relations is given by a span:
+## A morphism in the category of relations is given by a span:
 ##
 ##   R
 ##  / \
@@ -13,7 +13,7 @@
 
 ##
 InstallMethod( @__MODULE__,  PseudoInverse,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
   function( Rel, relation )
@@ -22,7 +22,7 @@ InstallMethod( @__MODULE__,  PseudoInverse,
     ## PairGAP( R, PairGAP( R → S, R → T ) );
     span = MorphismDatum( Rel, relation );
     
-    ## switch the source leg && the range leg of the span
+    ## switch the source leg and the range leg of the span
     return MorphismConstructor( Rel,
                    Range( relation ),
                    PairGAP( span[1],
@@ -33,7 +33,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  PseudoInverseOfHonestMorphism,
-        "for a category of relations && a morphism in the underlying category",
+        "for a category of relations and a morphism in the underlying category",
         [ IsCategoryOfRelations, IsCapCategoryMorphism ],
         
   function( Rel, morphism )
@@ -44,7 +44,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  EmbeddingOfRelationInDirectProduct,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
   function( Rel, relation )
@@ -64,7 +64,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  SourceProjection,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
   function( Rel, relation )
@@ -84,7 +84,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  RangeProjection,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
   function( Rel, relation )
@@ -104,7 +104,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  StandardizedSpan,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
   function( Rel, relation )
@@ -117,7 +117,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  MorphismByStandardizedSpan,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
   function( Rel, relation )
@@ -129,13 +129,13 @@ InstallMethod( @__MODULE__,  MorphismByStandardizedSpan,
     
 end );
 
-## a morphism ⥉ RelC comes from a morphism A -f-> B ⥉ C if the span defining the morhism
-## is congruent ⥉ the sense of IsCongruentForMorphisms below to the span [ 1_A, f ],
+## a morphism in RelC comes from a morphism A -f-> B in C if the span defining the morhism
+## is congruent in the sense of IsCongruentForMorphisms below to the span [ 1_A, f ],
 ## this is equivalent to saying that the domain of the morphism
-## (=source leg of the standardized span) is an isomorphism ⥉ C
+## (=source leg of the standardized span) is an isomorphism in C
 ##
 InstallMethod( @__MODULE__,  IsHonest,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
   function( Rel, relation )
@@ -146,7 +146,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  HonestRepresentative,
-        "for a category of relations && a morphism in the category of relations",
+        "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
 
   function( Rel, relation )
@@ -167,16 +167,16 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
     
     if !(HasIsCartesianCategory( C ) && IsCartesianCategory( C ))
         
-        Error( "CategoryOfRelations is !implemented for non-cartesian categories yet" );
+        Error( "CategoryOfRelations is not implemented for non-cartesian categories yet" );
         
     end;
     
     ##
     Rel = CreateCapCategory( @Concatenation( "CategoryOfRelations( ", Name( C ), " )" ), IsCategoryOfRelations, IsObjectInCategoryOfRelations, IsMorphismInCategoryOfRelations, IsCapCategoryTwoCell );
     
-    ## In order to have composition ⥉ Rel we need C to have fiber products
-    ## In order to replace the span with a single morphism ⥉ C we need C to have products
-    ## In order to replace this single morphism ⥉ C by a monomorphism ⥉ C we need C to have images
+    ## In order to have composition in Rel we need C to have fiber products
+    ## In order to replace the span with a single morphism in C we need C to have products
+    ## In order to replace this single morphism in C by a monomorphism in C we need C to have images
     
     ##
     SetUnderlyingCategory( Rel, C );
@@ -192,7 +192,7 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
            );
     
     ## "the objects of Rel are the objects of C"
-    ## here: object is an object ⥉ C
+    ## here: object is an object in C
     AddObjectConstructor( Rel,
       function( Rel, object )
         
@@ -209,8 +209,8 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
         
     end );
     
-    ## "a morphism ⥉ Rel is a span ⥉ C"
-    ## here span is a PairGAP( I, PairGAP( I → ObjectDatum( S ), I → ObjectDatum( T ) ) ) ⥉ C
+    ## "a morphism in Rel is a span in C"
+    ## here span is a PairGAP( I, PairGAP( I → ObjectDatum( S ), I → ObjectDatum( T ) ) ) in C
     AddMorphismConstructor( Rel,
       function( Rel, S, span, T )
         
@@ -237,10 +237,10 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
         C = UnderlyingCategory( Rel );
         
         if !IsIdenticalObj( CapCategory( ObjectDatum( Rel, object ) ), C )
-            ## the underlying object does !belong to the underlying category
+            ## the underlying object does not belong to the underlying category
             return false;
         elseif !IsWellDefinedForObjects( C, ObjectDatum( Rel, object ) )
-            ## the underlying object well-defined as an object ⥉ the underlying category
+            ## the underlying object well-defined as an object in the underlying category
             return false;
         end;
         
@@ -258,12 +258,12 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
         span = MorphismDatum( Rel, relation );
         
         if !ForAll( span, m -> IsIdenticalObj( CapCategory( m ), UnderlyingCategory( Rel ) ) )
-            ## at least one of two defining morphisms do !belong to the underlying category
+            ## at least one of two defining morphisms do not belong to the underlying category
             return false;
         elseif !IsWellDefinedForObjects( C, span[1] )
             return false;
         elseif !( IsWellDefinedForMorphisms( C, span[2][1] ) && IsWellDefinedForMorphisms( C, span[2][2] ) )
-            ## at least one of the two defining morphisms is !well-defined as a morphism ⥉ the underlying category
+            ## at least one of the two defining morphisms is not well-defined as a morphism in the underlying category
             return false;
         end;
         
@@ -300,12 +300,12 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
       function( Rel, relation1, relation2 )
         local emb1, emb2;
         
-        ## the embeddings ⥉ the underlying category of the direct product
-        ## of the underlying objects of the common source && common target
+        ## the embeddings in the underlying category of the direct product
+        ## of the underlying objects of the common source and common target
         emb1 = EmbeddingOfRelationInDirectProduct( Rel, relation1 );
         emb2 = EmbeddingOfRelationInDirectProduct( Rel, relation2 );
         
-        ## do the embeddings emb1 && emb2 define the same subobject of the direct product
+        ## do the embeddings emb1 and emb2 define the same subobject of the direct product
         return IsEqualAsSubobjects( UnderlyingCategory( Rel ), emb1, emb2 );
         
     end );
@@ -400,7 +400,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  /,
-        "for an object in the underlying category && a category of relations",
+        "for an object in the underlying category and a category of relations",
         [ IsCapCategoryObject, IsCategoryOfRelations ],
         
   function( M, Rel )
@@ -413,7 +413,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  AsMorphismInCategoryOfRelations,
-        "for a category of relations && a morphism in the underlying category",
+        "for a category of relations and a morphism in the underlying category",
         [ IsCategoryOfRelations, IsCapCategoryMorphism ],
         
   function( Rel, morphism )
@@ -451,7 +451,7 @@ end );
 
 ##
 InstallMethod( @__MODULE__,  MaximalRelationIntoTerminalObject,
-        "for a category of relations && for an object in the underlying category",
+        "for a category of relations and for an object in the underlying category",
         [ IsCategoryOfRelations, IsObjectInCategoryOfRelations ],
         
   function( Rel, object )
@@ -482,7 +482,7 @@ InstallMethod( @__MODULE__,  ViewString,
         
   function( a )
     
-    return @Concatenation( "An object ⥉ the category of relations given by: ", ViewString( ObjectDatum( a ) ) );
+    return @Concatenation( "An object in the category of relations given by: ", ViewString( ObjectDatum( a ) ) );
     
 end );
 
@@ -492,6 +492,6 @@ InstallMethod( @__MODULE__,  DisplayString,
         
   function( a )
     
-    return @Concatenation( DisplayString( ObjectDatum( a ) ), "\nAn object ⥉ the category of relations given by the above data" );
+    return @Concatenation( DisplayString( ObjectDatum( a ) ), "\nAn object in the category of relations given by the above data" );
     
 end );

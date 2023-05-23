@@ -25,7 +25,7 @@ CategoryFilter = function( cat )
              ValueGlobal( "IsCategoryOfSkeletalFinSets" )( RangeCategoryOfHomomorphismStructure( cat ) );
   end );
 
-## Page 20 ⥉ Peter Freyd, Aspect of topoi, Bull. Austral. Math. Soc, 7 (1972)
+## Page 20 in Peter Freyd, Aspect of topoi, Bull. Austral. Math. Soc, 7 (1972)
 AddDerivationToCAP( ImageEmbedding,
                     "the (regular) image as the equalizer of the cokernel-pair",
                     [ [ EmbeddingOfEqualizer, 1 ],
@@ -115,8 +115,8 @@ AddDerivationToCAP( TruthMorphismOfFalseWithGivenObjects,
     
 end );
 
-## [Goldblatt 1984: Topoi - The categorical analysis of logic, Section 6.6 (Truth-arrows ⥉ a topos)]
-## ¬: Ω → Ω classifies ⊥: 𝟙 ↪ Ω
+## [Goldblatt 1984: Topoi - The categorical analysis of logic, Section 6.6 (Truth-arrows in a topos)]
+## !: Ω → Ω classifies ⊥: 𝟙 ↪ Ω
 AddDerivationToCAP( TruthMorphismOfNotWithGivenObjects,
                     "",
                     [ [ TerminalObject, 1 ],
@@ -134,7 +134,7 @@ AddDerivationToCAP( TruthMorphismOfNotWithGivenObjects,
     
 end );
 
-## [Goldblatt 1984: Topoi - The categorical analysis of logic, Section 6.6 (Truth-arrows ⥉ a topos)]
+## [Goldblatt 1984: Topoi - The categorical analysis of logic, Section 6.6 (Truth-arrows in a topos)]
 ## ∧: Ω × Ω → Ω classifies the product morphism ⟨ ⊤, ⊤ ⟩: 𝟙 ↪ Ω × Ω of twice the morphism ⊤: 𝟙 ↪ Ω
 AddDerivationToCAP( TruthMorphismOfAndWithGivenObjects,
                     "",
@@ -160,7 +160,7 @@ AddDerivationToCAP( TruthMorphismOfAndWithGivenObjects,
     
 end );
 
-## [Goldblatt 1984: Topoi - The categorical analysis of logic, Section 6.6 (Truth-arrows ⥉ a topos)]
+## [Goldblatt 1984: Topoi - The categorical analysis of logic, Section 6.6 (Truth-arrows in a topos)]
 ## ∨: Ω × Ω → Ω classifies [ ⟨⊤_Ω,id_Ω⟩, ⟨id_Ω,⊤_Ω⟩ ]: Ω ⊔ Ω ↪ Ω × Ω
 AddDerivationToCAP( TruthMorphismOfOrWithGivenObjects,
                     "",
@@ -508,10 +508,10 @@ AddDerivationToCAP( RelativeTruthMorphismOfImpliesWithGivenObjects,
 end );
 
 ## Note that |Sub(Ω)| == |End(Ω)|
-## * but id_Ω ≜ ⊤_Ω ∈ Sub(Ω) does !correspond to id_Ω ∈ End(Ω) but to ⊤_Ω: Ω → 𝟙 → Ω ∈ End(Ω), which is generally !an iso
-## * && id_Ω ∈ End(Ω) corresponds to ⊤: 𝟙 → Ω
+## * but id_Ω ≜ ⊤_Ω ∈ Sub(Ω) does not correspond to id_Ω ∈ End(Ω) but to ⊤_Ω: Ω → 𝟙 → Ω ∈ End(Ω), which is generally not an iso
+## * and id_Ω ∈ End(Ω) corresponds to ⊤: 𝟙 → Ω
 
-## -ι is an operation Sub(X) → Sub(X) induced by ¬: Ω → Ω
+## -ι is an operation Sub(X) → Sub(X) induced by !: Ω → Ω
 ## Thm: For ι ∈ Sub(Ω): -ι == ( ι ⇒ ⊥_Sub(Ω) )
 ## Cor: For ι ∈ Sub(X): -ι == ( ι ⇒ ⊥_Sub(X) )
 AddDerivationToCAP( EmbeddingOfPseudoComplementSubobject,
@@ -528,7 +528,7 @@ AddDerivationToCAP( EmbeddingOfPseudoComplementSubobject,
                    cat,
                    PreCompose( cat,
                            ClassifyingMorphismOfSubobject( cat, iota ), ## χ_ι: X → Ω
-                           TruthMorphismOfNot( cat ) ) ); ## ¬: Ω → Ω
+                           TruthMorphismOfNot( cat ) ) ); ## !: Ω → Ω
     
 end );
 
@@ -544,7 +544,7 @@ AddDerivationToCAP( PseudoComplementSubobject,
 end );
 
 ## ι1 ∧ ι2 is an operation Sub(X) × Sub(X) → Sub(X) induced by ∧: Ω × Ω → Ω,
-## however, we instead use the finite completeness && finite cocompletenss of the topos (see next method)
+## however, we instead use the finite completeness and finite cocompletenss of the topos (see next method)
 AddDerivationToCAP( EmbeddingOfIntersectionSubobject,
                     "",
                     [ [ SubobjectClassifier, 1 ],
@@ -604,7 +604,7 @@ AddDerivationToCAP( IntersectionSubobject,
 end );
 
 ## ι1 ∨ ι2 is an operation Sub(X) × Sub(X) → Sub(X) induced by ∨: Ω × Ω → Ω
-## however, we instead use the finite completeness && finite cocompletenss of the topos (see next method)
+## however, we instead use the finite completeness and finite cocompletenss of the topos (see next method)
 AddDerivationToCAP( EmbeddingOfUnionSubobject,
                     "",
                     [ [ SubobjectClassifier, 1 ],
@@ -697,7 +697,7 @@ end );
 
 ##
 AddDerivationToCAP( MorphismsOfExternalHom,
-                    "MorphismsOfExternalHom using MorphismsOfExternalHom ⥉ RangeCategoryOfHomomorphismStructure",
+                    "MorphismsOfExternalHom using MorphismsOfExternalHom in RangeCategoryOfHomomorphismStructure",
                     [ [ HomomorphismStructureOnObjects, 1 ],
                       [ DistinguishedObjectOfHomomorphismStructure, 1 ],
                       [ InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism, 2 ],

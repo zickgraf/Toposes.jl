@@ -389,7 +389,7 @@ HasPushoutComplement = @rec(
     
     if value == fail
         
-        return [ false, "can!decide whether the two morphisms are composable" ];
+        return [ false, "cannot decide whether the two morphisms are composable" ];
         
     elseif value == false
         
@@ -412,7 +412,7 @@ PushoutComplement = @rec(
     
     if value == fail
         
-        return [ false, "can!decide whether the two morphisms are composable" ];
+        return [ false, "cannot decide whether the two morphisms are composable" ];
         
     elseif value == false
         

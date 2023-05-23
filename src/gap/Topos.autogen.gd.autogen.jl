@@ -10,7 +10,7 @@
 #! @Section Add-methods
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `CartesianSquareOfSubobjectClassifier`.
 #! $F: (  ) \mapsto \mathtt[CartesianSquareOfSubobjectClassifier]()$.
@@ -29,7 +29,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `ClassifyingMorphismOfSubobject`.
 #! $F: ( alpha ) \mapsto \mathtt[ClassifyingMorphismOfSubobject](alpha)$.
@@ -48,7 +48,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier`.
 #! $F: ( alpha, Omega ) \mapsto \mathtt[ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier](alpha, Omega)$.
@@ -67,7 +67,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfIntersectionSubobject`.
 #! $F: ( iota1, iota2 ) \mapsto \mathtt[EmbeddingOfIntersectionSubobject](iota1, iota2)$.
@@ -86,7 +86,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfIntersectionSubobjectWithGivenIntersection`.
 #! $F: ( iota1, iota2, intersection ) \mapsto \mathtt[EmbeddingOfIntersectionSubobjectWithGivenIntersection](iota1, iota2, intersection)$.
@@ -105,7 +105,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfPseudoComplementSubobject`.
 #! $F: ( iota ) \mapsto \mathtt[EmbeddingOfPseudoComplementSubobject](iota)$.
@@ -124,7 +124,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfPseudoComplementSubobjectWithGivenPseudoComplement`.
 #! $F: ( iota, complement ) \mapsto \mathtt[EmbeddingOfPseudoComplementSubobjectWithGivenPseudoComplement](iota, complement)$.
@@ -143,7 +143,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfRelativePseudoComplementSubobject`.
 #! $F: ( iota1, iota2 ) \mapsto \mathtt[EmbeddingOfRelativePseudoComplementSubobject](iota1, iota2)$.
@@ -162,7 +162,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfRelativePseudoComplementSubobjectWithGivenImplication`.
 #! $F: ( iota1, iota2, implication ) \mapsto \mathtt[EmbeddingOfRelativePseudoComplementSubobjectWithGivenImplication](iota1, iota2, implication)$.
@@ -181,7 +181,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfUnionSubobject`.
 #! $F: ( iota1, iota2 ) \mapsto \mathtt[EmbeddingOfUnionSubobject](iota1, iota2)$.
@@ -200,7 +200,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfUnionSubobjectWithGivenUnion`.
 #! $F: ( iota1, iota2, union ) \mapsto \mathtt[EmbeddingOfUnionSubobjectWithGivenUnion](iota1, iota2, union)$.
@@ -219,7 +219,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `ExactCoverWithGlobalElements`.
 #! $F: ( arg2 ) \mapsto \mathtt[ExactCoverWithGlobalElements](arg2)$.
@@ -238,7 +238,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `HasPushoutComplement`.
 #! $F: ( arg2, arg3 ) \mapsto \mathtt[HasPushoutComplement](arg2, arg3)$.
@@ -257,7 +257,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `IntersectionSubobject`.
 #! $F: ( arg2, arg3 ) \mapsto \mathtt[IntersectionSubobject](arg2, arg3)$.
@@ -276,7 +276,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `IsomorphismOntoCartesianSquareOfPowerObject`.
 #! $F: ( a ) \mapsto \mathtt[IsomorphismOntoCartesianSquareOfPowerObject](a)$.
@@ -295,7 +295,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects`.
 #! $F: ( ExpaOmega2, a, PaxPa ) \mapsto \mathtt[IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects](ExpaOmega2, a, PaxPa)$.
@@ -314,7 +314,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `LawvereTierneyEmbeddingsOfSubobjectClassifiers`.
 #! $F: (  ) \mapsto \mathtt[LawvereTierneyEmbeddingsOfSubobjectClassifiers]()$.
@@ -333,7 +333,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `LawvereTierneyLocalModalityOperators`.
 #! $F: (  ) \mapsto \mathtt[LawvereTierneyLocalModalityOperators]()$.
@@ -352,7 +352,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `LawvereTierneySubobjects`.
 #! $F: (  ) \mapsto \mathtt[LawvereTierneySubobjects]()$.
@@ -371,7 +371,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `ListOfSubobjects`.
 #! $F: ( arg2 ) \mapsto \mathtt[ListOfSubobjects](arg2)$.
@@ -390,7 +390,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `MorphismsOfExternalHom`.
 #! $F: ( arg2, arg3 ) \mapsto \mathtt[MorphismsOfExternalHom](arg2, arg3)$.
@@ -409,7 +409,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `PowerObject`.
 #! $F: ( arg2 ) \mapsto \mathtt[PowerObject](arg2)$.
@@ -428,7 +428,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `PowerObjectFunctorial`.
 #! $F: ( f ) \mapsto \mathtt[PowerObjectFunctorial](f)$.
@@ -447,7 +447,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `PowerObjectFunctorialWithGivenPowerObjects`.
 #! $F: ( Pb, f, Pa ) \mapsto \mathtt[PowerObjectFunctorialWithGivenPowerObjects](Pb, f, Pa)$.
@@ -466,7 +466,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `PseudoComplementSubobject`.
 #! $F: ( arg2 ) \mapsto \mathtt[PseudoComplementSubobject](arg2)$.
@@ -485,7 +485,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `PushoutComplement`.
 #! $F: ( l, m ) \mapsto \mathtt[PushoutComplement](l, m)$.
@@ -504,7 +504,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativePseudoComplementSubobject`.
 #! $F: ( arg2, arg3 ) \mapsto \mathtt[RelativePseudoComplementSubobject](arg2, arg3)$.
@@ -523,7 +523,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfAnd`.
 #! $F: ( a ) \mapsto \mathtt[RelativeTruthMorphismOfAnd](a)$.
@@ -542,7 +542,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfAndWithGivenObjects`.
 #! $F: ( PaxPa, a, Pa ) \mapsto \mathtt[RelativeTruthMorphismOfAndWithGivenObjects](PaxPa, a, Pa)$.
@@ -561,7 +561,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfFalse`.
 #! $F: ( a ) \mapsto \mathtt[RelativeTruthMorphismOfFalse](a)$.
@@ -580,7 +580,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfFalseWithGivenObjects`.
 #! $F: ( T, a, Pa ) \mapsto \mathtt[RelativeTruthMorphismOfFalseWithGivenObjects](T, a, Pa)$.
@@ -599,7 +599,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfImplies`.
 #! $F: ( a ) \mapsto \mathtt[RelativeTruthMorphismOfImplies](a)$.
@@ -618,7 +618,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfImpliesWithGivenObjects`.
 #! $F: ( PaxPa, a, Pa ) \mapsto \mathtt[RelativeTruthMorphismOfImpliesWithGivenObjects](PaxPa, a, Pa)$.
@@ -637,7 +637,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfNot`.
 #! $F: ( a ) \mapsto \mathtt[RelativeTruthMorphismOfNot](a)$.
@@ -656,7 +656,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfNotWithGivenObjects`.
 #! $F: ( Pa, a, Pa1 ) \mapsto \mathtt[RelativeTruthMorphismOfNotWithGivenObjects](Pa, a, Pa1)$.
@@ -675,7 +675,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfOr`.
 #! $F: ( a ) \mapsto \mathtt[RelativeTruthMorphismOfOr](a)$.
@@ -694,7 +694,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfOrWithGivenObjects`.
 #! $F: ( PaxPa, a, Pa ) \mapsto \mathtt[RelativeTruthMorphismOfOrWithGivenObjects](PaxPa, a, Pa)$.
@@ -713,7 +713,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfTrue`.
 #! $F: ( a ) \mapsto \mathtt[RelativeTruthMorphismOfTrue](a)$.
@@ -732,7 +732,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `RelativeTruthMorphismOfTrueWithGivenObjects`.
 #! $F: ( T, a, Pa ) \mapsto \mathtt[RelativeTruthMorphismOfTrueWithGivenObjects](T, a, Pa)$.
@@ -751,7 +751,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `SingletonMorphism`.
 #! $F: ( a ) \mapsto \mathtt[SingletonMorphism](a)$.
@@ -770,7 +770,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `SingletonMorphismWithGivenPowerObject`.
 #! $F: ( a, Pa ) \mapsto \mathtt[SingletonMorphismWithGivenPowerObject](a, Pa)$.
@@ -789,7 +789,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `SubobjectClassifier`.
 #! $F: (  ) \mapsto \mathtt[SubobjectClassifier]()$.
@@ -808,7 +808,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `SubobjectOfClassifyingMorphism`.
 #! $F: ( alpha ) \mapsto \mathtt[SubobjectOfClassifyingMorphism](alpha)$.
@@ -827,7 +827,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfAnd`.
 #! $F: (  ) \mapsto \mathtt[TruthMorphismOfAnd]()$.
@@ -846,7 +846,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfAndWithGivenObjects`.
 #! $F: ( Omega2, Omega ) \mapsto \mathtt[TruthMorphismOfAndWithGivenObjects](Omega2, Omega)$.
@@ -865,7 +865,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfFalse`.
 #! $F: (  ) \mapsto \mathtt[TruthMorphismOfFalse]()$.
@@ -884,7 +884,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfFalseWithGivenObjects`.
 #! $F: ( T, Omega ) \mapsto \mathtt[TruthMorphismOfFalseWithGivenObjects](T, Omega)$.
@@ -903,7 +903,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfImplies`.
 #! $F: (  ) \mapsto \mathtt[TruthMorphismOfImplies]()$.
@@ -922,7 +922,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfImpliesWithGivenObjects`.
 #! $F: ( Omega2, Omega ) \mapsto \mathtt[TruthMorphismOfImpliesWithGivenObjects](Omega2, Omega)$.
@@ -941,7 +941,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfNot`.
 #! $F: (  ) \mapsto \mathtt[TruthMorphismOfNot]()$.
@@ -960,7 +960,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfNotWithGivenObjects`.
 #! $F: ( Omega, Omega1 ) \mapsto \mathtt[TruthMorphismOfNotWithGivenObjects](Omega, Omega1)$.
@@ -979,7 +979,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfOr`.
 #! $F: (  ) \mapsto \mathtt[TruthMorphismOfOr]()$.
@@ -998,7 +998,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfOrWithGivenObjects`.
 #! $F: ( Omega2, Omega ) \mapsto \mathtt[TruthMorphismOfOrWithGivenObjects](Omega2, Omega)$.
@@ -1017,7 +1017,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfTrue`.
 #! $F: (  ) \mapsto \mathtt[TruthMorphismOfTrue]()$.
@@ -1036,7 +1036,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `TruthMorphismOfTrueWithGivenObjects`.
 #! $F: ( T, Omega ) \mapsto \mathtt[TruthMorphismOfTrueWithGivenObjects](T, Omega)$.
@@ -1055,7 +1055,7 @@
                   [ IsCapCategory, IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ && a function $F$.
+#! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
 #! to the category for the basic operation `UnionSubobject`.
 #! $F: ( arg2, arg3 ) \mapsto \mathtt[UnionSubobject](arg2, arg3)$.
