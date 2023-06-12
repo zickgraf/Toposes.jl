@@ -4,7 +4,7 @@
 # Implementations
 #
 
-if IsPackageMarkedForLoading( "Digraphs", ">= 1.3.1" )
+if (IsPackageMarkedForLoading( "Digraphs", ">= 1.3.1" ))
 
 ##
 InstallMethod( @__MODULE__,  DigraphOfSubobjects,

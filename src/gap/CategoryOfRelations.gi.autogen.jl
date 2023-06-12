@@ -165,7 +165,7 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
   function( C )
     local Rel;
     
-    if !(HasIsCartesianCategory( C ) && IsCartesianCategory( C ))
+    if (!(HasIsCartesianCategory( C ) && IsCartesianCategory( C )))
         
         Error( "CategoryOfRelations is not implemented for non-cartesian categories yet" );
         
@@ -236,10 +236,10 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
         
         C = UnderlyingCategory( Rel );
         
-        if !IsIdenticalObj( CapCategory( ObjectDatum( Rel, object ) ), C )
+        if (@not IsIdenticalObj( CapCategory( ObjectDatum( Rel, object ) ), C ))
             ## the underlying object does not belong to the underlying category
             return false;
-        elseif !IsWellDefinedForObjects( C, ObjectDatum( Rel, object ) )
+        elseif (@not IsWellDefinedForObjects( C, ObjectDatum( Rel, object ) ))
             ## the underlying object well-defined as an object in the underlying category
             return false;
         end;
@@ -257,12 +257,12 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
         
         span = MorphismDatum( Rel, relation );
         
-        if !ForAll( span, m -> IsIdenticalObj( CapCategory( m ), UnderlyingCategory( Rel ) ) )
+        if (@not ForAll( span, m -> IsIdenticalObj( CapCategory( m ), UnderlyingCategory( Rel ) ) ))
             ## at least one of two defining morphisms do not belong to the underlying category
             return false;
-        elseif !IsWellDefinedForObjects( C, span[1] )
+        elseif (@not IsWellDefinedForObjects( C, span[1] ))
             return false;
-        elseif !( IsWellDefinedForMorphisms( C, span[2][1] ) && IsWellDefinedForMorphisms( C, span[2][2] ) )
+        elseif (!( IsWellDefinedForMorphisms( C, span[2][1] ) && IsWellDefinedForMorphisms( C, span[2][2] ) ))
             ## at least one of the two defining morphisms is not well-defined as a morphism in the underlying category
             return false;
         end;
@@ -310,8 +310,8 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
         
     end );
     
-    if CanCompute( C, "FiberProduct" ) &&
-       CanCompute( C, "ProjectionInFactorOfFiberProductWithGivenFiberProduct" )
+    if (CanCompute( C, "FiberProduct" ) &&
+       CanCompute( C, "ProjectionInFactorOfFiberProductWithGivenFiberProduct" ))
         
         ## Composition here means taking the pullback of the adjacent legs of the spans
         ##
@@ -369,11 +369,11 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
         
     end );
     
-    if CanCompute( C, "SubobjectClassifier" ) &&
+    if (CanCompute( C, "SubobjectClassifier" ) &&
        CanCompute( C, "HomomorphismStructureOnObjects" ) &&
        CanCompute( C, "DirectProduct" ) &&
-       HasRangeCategoryOfHomomorphismStructure( C )
-       ##IsCategoryOfFinSets( RangeCategoryOfHomomorphismStructure( C ) )
+       HasRangeCategoryOfHomomorphismStructure( C ))
+       ##IsCategoryOfFinSets( RangeCategoryOfHomomorphismStructure( C ) ))
         
         SetRangeCategoryOfHomomorphismStructure( Rel, RangeCategoryOfHomomorphismStructure( C ) );
         
