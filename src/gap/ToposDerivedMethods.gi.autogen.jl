@@ -5,25 +5,21 @@
 #
 
 ##
-AddDerivationToCAP( IsHomSetInhabited,
+AddDerivationToCAP( NonliftableMorphismFromDistinguishedObject,
         "",
-        [ [ HomomorphismStructureOnObjects, 1 ],
-          [ IsInitial, 1, RangeCategoryOfHomomorphismStructure ] ],
+        [ [ ExactCoverWithGlobalElements, 1 ],
+          [ IsLiftableAlongMonomorphism, 1 ] ],
         
-  function( cat, a, b )
-    local range_cat;
+  function( cat, iota )
     
-    range_cat = RangeCategoryOfHomomorphismStructure( cat );
-    
-    return @not IsInitial( range_cat,
-                   HomomorphismStructureOnObjects( cat, a, b ) );
+    return SafeFirst( ExactCoverWithGlobalElements( cat, Range( iota ) ),
+                   mor -> @not IsLiftableAlongMonomorphism( cat, iota, mor ) );
     
 end; CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
 CategoryFilter = function( cat )
-      return HasRangeCategoryOfHomomorphismStructure( cat ) &&
-             IsBoundGlobal( "IsCategoryOfSkeletalFinSets" ) &&
-             ValueGlobal( "IsCategoryOfSkeletalFinSets" )( RangeCategoryOfHomomorphismStructure( cat ) );
-  end );
+    return HasRangeCategoryOfHomomorphismStructure( cat ) &&
+           IsIdenticalObj( cat, RangeCategoryOfHomomorphismStructure( cat ) );
+end );
 
 ## Page 20 in Peter Freyd, Aspect of topoi, Bull. Austral. Math. Soc, 7 (1972)
 AddDerivationToCAP( ImageEmbedding,
