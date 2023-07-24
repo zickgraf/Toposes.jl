@@ -37,6 +37,9 @@ julia> sa = SingletonMorphism( a )
 julia> Display( sa )
 [ 0, 1, 2 ] ⱶ[ 1, 2, 4 ]→ [ 0,..., 7 ]
 
+julia> sa == LowerSegmentOfRelation( a, a, CartesianDiagonal( a, 2 ) )
+true
+
 ```
 
 ```jldoctest AutoDocTests
@@ -124,32 +127,6 @@ julia> iPa = RelativeTruthMorphismOfImplies( a )
 
 julia> Display( iPa )
 [ 0,..., 15 ] ⱶ[ 3, 2, 1, 0, 3, 3, 1, 1, 3, 2, 3, 2, 3, 3, 3, 3 ]→ [ 0,..., 3 ]
-
-```
-
-```jldoctest AutoDocTests
-julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
-
-julia> true
-true
-
-julia> LTI = LawvereTierneyLocalModalityOperators( SkeletalFinSets );
-
-julia> Perform( LTI, Display )
-[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
-[ 0, 1 ] ⱶ[ 1, 1 ]→ [ 0, 1 ]
-
-julia> LTS = LawvereTierneySubobjects( SkeletalFinSets );
-
-julia> Perform( LTS, Display )
-[ 0 ] ⱶ[ 1 ]→ [ 0, 1 ]
-[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
-
-julia> LTC = LawvereTierneyEmbeddingsOfSubobjectClassifiers( SkeletalFinSets );
-
-julia> Perform( LTC, Display )
-[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
-[ 0 ] ⱶ[ 1 ]→ [ 0, 1 ]
 
 ```
 
@@ -316,6 +293,32 @@ julia> Length( H )
 
 julia> Display( H )
 [ [ [ 1, 2 ], [ 2, 2 ] ], [ [ 1, 3 ], [ 2, 3 ] ], [ [ 1, 4 ] ], [ [ 1, 5 ], [ 2, 5 ] ], [ [ 1, 10 ] ], [ [ 2, 4 ] ], [ [ 2, 7 ] ] ]
+
+```
+
+```jldoctest AutoDocTests
+julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
+
+julia> true
+true
+
+julia> LTI = LawvereTierneyLocalModalityOperators( SkeletalFinSets );
+
+julia> Perform( LTI, Display )
+[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
+[ 0, 1 ] ⱶ[ 1, 1 ]→ [ 0, 1 ]
+
+julia> LTS = LawvereTierneySubobjects( SkeletalFinSets );
+
+julia> Perform( LTS, Display )
+[ 0 ] ⱶ[ 1 ]→ [ 0, 1 ]
+[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
+
+julia> LTC = LawvereTierneyEmbeddingsOfSubobjectClassifiers( SkeletalFinSets );
+
+julia> Perform( LTC, Display )
+[ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
+[ 0 ] ⱶ[ 1 ]→ [ 0, 1 ]
 
 ```
 
