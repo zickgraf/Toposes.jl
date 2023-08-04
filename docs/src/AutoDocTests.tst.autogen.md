@@ -162,22 +162,6 @@ julia> m = EmbeddingOfFinSets( L, G )
 ```jldoctest AutoDocTests
 julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
 
-julia> HasPushoutComplement( l, m )
-true
-
-julia> c = PushoutComplement( l, m )
-<A morphism in FinSets>
-
-julia> D = Source( c );
-
-julia> Display( D )
-[ 2, 3, 4, 5, 10 ]
-
-```
-
-```jldoctest AutoDocTests
-julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
-
 julia> true
 true
 
@@ -204,20 +188,6 @@ julia> m = MapOfFinSets( L, [ 0, 1, 2, 3, 5, 6 ], G )
 
 julia> Display( m )
 [ 0,..., 5 ] ⱶ[ 0, 1, 2, 3, 5, 6 ]→ [ 0,..., 7 ]
-
-```
-
-```jldoctest AutoDocTests
-julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
-
-julia> HasPushoutComplement( l, m )
-true
-
-julia> c = PushoutComplement( l, m )
-|5| → |8|
-
-julia> Display( c )
-[ 0,..., 4 ] ⱶ[ 2, 3, 4, 5, 7 ]→ [ 0,..., 7 ]
 
 ```
 
