@@ -9,11 +9,18 @@
 
 MorphismsOfExternalHom = @rec(
   filter_list = [ "category", "object", "object" ],
-  return_type = "list_of_morphisms" ),
+  return_type = "list_of_morphisms",
+  dual_operation = "MorphismsOfExternalHom",
+  dual_arguments_reversed = true ),
 
 ExactCoverWithGlobalElements = @rec(
   filter_list = [ "category", "object" ],
   return_type = "list_of_morphisms" ),
+
+IndexOfNonliftableMorphismFromDistinguishedObject = @rec(
+  filter_list = [ "category", "morphism" ],
+  return_type = "nonneg_integer_or_infinity",
+  input_arguments_names = [ "cat", "iota" ] ),
 
 NonliftableMorphismFromDistinguishedObject = @rec(
   filter_list = [ "category", "morphism" ],
