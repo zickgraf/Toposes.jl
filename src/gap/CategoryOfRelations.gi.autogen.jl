@@ -24,7 +24,7 @@ InstallMethod( @__MODULE__,  PseudoInverse,
     
     ## switch the source leg and the range leg of the span
     return MorphismConstructor( Rel,
-                   Range( relation ),
+                   Target( relation ),
                    PairGAP( span[1],
                          PairGAP( span[2][2], span[2][1] ) ),
                    Source( relation ) );
@@ -56,7 +56,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfRelationInDirectProduct,
     
     return ImageEmbedding( C, ## the mono R ↪ S × T of the epi-mono factorization of I → S × T
                    UniversalMorphismIntoDirectProduct( C, ## I → S × T
-                           [ Range( span[2][1] ), Range( span[2][2] ) ],
+                           [ Target( span[2][1] ), Target( span[2][2] ) ],
                            span[1],
                            [ span[2][1], span[2][2] ] ) );
     
@@ -75,7 +75,7 @@ InstallMethod( @__MODULE__,  SourceProjection,
     emb = EmbeddingOfRelationInDirectProduct( Rel, relation ); ## R ↪ S × T
     
     ## [ S, T ]
-    ST = [ ObjectDatum( Rel, Source( relation ) ), ObjectDatum( Rel, Range( relation ) ) ];
+    ST = [ ObjectDatum( Rel, Source( relation ) ), ObjectDatum( Rel, Target( relation ) ) ];
     
     ## R ↪ S × T → S
     return PreCompose( C, emb, ProjectionInFactorOfDirectProduct( C, ST, 1 ) );
@@ -95,7 +95,7 @@ InstallMethod( @__MODULE__,  RangeProjection,
     emb = EmbeddingOfRelationInDirectProduct( Rel, relation ); ## R ↪ S × T
     
     ## [ S, T ]
-    ST = [ ObjectDatum( Rel, Source( relation ) ), ObjectDatum( Rel, Range( relation ) ) ];
+    ST = [ ObjectDatum( Rel, Source( relation ) ), ObjectDatum( Rel, Target( relation ) ) ];
     
     ## R ↪ S × T → T
     return PreCompose( C, emb, ProjectionInFactorOfDirectProduct( C, ST, 2 ) );
@@ -125,7 +125,7 @@ InstallMethod( @__MODULE__,  MorphismByStandardizedSpan,
     return MorphismConstructor( Rel,
                    Source( relation ),
                    StandardizedSpan( Rel, relation ),
-                   Range( relation ) );
+                   Target( relation ) );
     
 end );
 
@@ -191,9 +191,6 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
     
     ##
     SetUnderlyingCategory( Rel, C );
-    
-    ##
-    Rel.category_as_first_argument = true;
     
     ##
     Rel.compiler_hints =
@@ -353,7 +350,7 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
                                        PreCompose( C,
                                          ProjectionInFactorOfFiberProductWithGivenFiberProduct( C, diagram, 2, K ),
                                          MorphismDatum( Rel, post_relation )[2][2] ) ) ),
-                           Range( post_relation ) );
+                           Target( post_relation ) );
             
         end );
         
@@ -434,7 +431,7 @@ InstallMethod( @__MODULE__,  AsMorphismInCategoryOfRelations,
     
     S = Source( morphism );
     
-    T = Range( morphism );
+    T = Target( morphism );
     
     rel = MorphismConstructor( Rel,
                    ObjectConstructor( Rel, S ),

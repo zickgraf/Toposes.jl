@@ -69,6 +69,44 @@
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
+#! to the category for the basic operation `CoproductComplement`.
+#! $F: ( iota ) \mapsto \mathtt[CoproductComplement](iota)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddCoproductComplement",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddCoproductComplement",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddCoproductComplement",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddCoproductComplement",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `DirectProductComplement`.
+#! $F: ( pi ) \mapsto \mathtt[DirectProductComplement](pi)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddDirectProductComplement",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddDirectProductComplement",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddDirectProductComplement",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddDirectProductComplement",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
 #! to the category for the basic operation `EmbeddingOfIntersectionSubobject`.
 #! $F: ( iota1, iota2 ) \mapsto \mathtt[EmbeddingOfIntersectionSubobject](iota1, iota2)$.
 #! @Returns nothing
@@ -273,6 +311,44 @@
                   [ IsCapCategory, IsList, IsInt ] );
 
 @DeclareOperation( "AddIndexOfNonliftableMorphismFromDistinguishedObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `InjectionOfCoproductComplement`.
+#! $F: ( iota ) \mapsto \mathtt[InjectionOfCoproductComplement](iota)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddInjectionOfCoproductComplement",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddInjectionOfCoproductComplement",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddInjectionOfCoproductComplement",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddInjectionOfCoproductComplement",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `InjectionOfCoproductComplementWithGivenCoproductComplement`.
+#! $F: ( iota, complement ) \mapsto \mathtt[InjectionOfCoproductComplementWithGivenCoproductComplement](iota, complement)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddInjectionOfCoproductComplementWithGivenCoproductComplement",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddInjectionOfCoproductComplementWithGivenCoproductComplement",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddInjectionOfCoproductComplementWithGivenCoproductComplement",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddInjectionOfCoproductComplementWithGivenCoproductComplement",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
@@ -487,6 +563,44 @@
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operation adds the given function $F$
+#! to the category for the basic operation `PTransposeMorphism`.
+#! $F: ( a, b, f ) \mapsto \mathtt[PTransposeMorphism](a, b, f)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddPTransposeMorphism",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddPTransposeMorphism",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddPTransposeMorphism",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddPTransposeMorphism",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `PTransposeMorphismWithGivenRange`.
+#! $F: ( a, b, f, Pb ) \mapsto \mathtt[PTransposeMorphismWithGivenRange](a, b, f, Pb)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddPTransposeMorphismWithGivenRange",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddPTransposeMorphismWithGivenRange",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddPTransposeMorphismWithGivenRange",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddPTransposeMorphismWithGivenRange",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
 #! to the category for the basic operation `PowerObject`.
 #! $F: ( arg2 ) \mapsto \mathtt[PowerObject](arg2)$.
 #! @Returns nothing
@@ -501,6 +615,44 @@
                   [ IsCapCategory, IsList, IsInt ] );
 
 @DeclareOperation( "AddPowerObject",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `PowerObjectEvaluationMorphism`.
+#! $F: ( a ) \mapsto \mathtt[PowerObjectEvaluationMorphism](a)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddPowerObjectEvaluationMorphism",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddPowerObjectEvaluationMorphism",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddPowerObjectEvaluationMorphism",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddPowerObjectEvaluationMorphism",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `PowerObjectEvaluationMorphismWithGivenObjects`.
+#! $F: ( Pa_xa, a, Omega ) \mapsto \mathtt[PowerObjectEvaluationMorphismWithGivenObjects](Pa_xa, a, Omega)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddPowerObjectEvaluationMorphismWithGivenObjects",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddPowerObjectEvaluationMorphismWithGivenObjects",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddPowerObjectEvaluationMorphismWithGivenObjects",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddPowerObjectEvaluationMorphismWithGivenObjects",
                   [ IsCapCategory, IsList ] );
 
 #! @Description
@@ -539,6 +691,44 @@
                   [ IsCapCategory, IsList, IsInt ] );
 
 @DeclareOperation( "AddPowerObjectFunctorialWithGivenPowerObjects",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `ProjectionInDirectProductComplement`.
+#! $F: ( pi ) \mapsto \mathtt[ProjectionInDirectProductComplement](pi)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddProjectionInDirectProductComplement",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddProjectionInDirectProductComplement",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddProjectionInDirectProductComplement",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddProjectionInDirectProductComplement",
+                  [ IsCapCategory, IsList ] );
+
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operation adds the given function $F$
+#! to the category for the basic operation `ProjectionInDirectProductComplementWithGivenDirectProductComplement`.
+#! $F: ( pi, complement ) \mapsto \mathtt[ProjectionInDirectProductComplementWithGivenDirectProductComplement](pi, complement)$.
+#! @Returns nothing
+#! @Arguments C, F
+@DeclareOperation( "AddProjectionInDirectProductComplementWithGivenDirectProductComplement",
+                  [ IsCapCategory, IsFunction ] );
+
+@DeclareOperation( "AddProjectionInDirectProductComplementWithGivenDirectProductComplement",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+@DeclareOperation( "AddProjectionInDirectProductComplementWithGivenDirectProductComplement",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+@DeclareOperation( "AddProjectionInDirectProductComplementWithGivenDirectProductComplement",
                   [ IsCapCategory, IsList ] );
 
 #! @Description

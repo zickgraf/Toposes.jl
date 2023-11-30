@@ -51,7 +51,7 @@
 #!  of morphisms from the distinguished object
 #!  $t =$<C>DistinguishedObjectOfHomomorphismStructure</C>( $\mathbf[C]$ ) to <C>Range</C>( <A>iota</A> ),
 #!  such that <C>IsLiftableAlongMonomorphism</C>( <A>iota</A>, $\tau$ ) == <C>false</C>.
-#! @Returns a morphism in $\mathrm[Hom]( t, \mathrm[Range]( \iota ) )$
+#! @Returns a morphism in $\mathrm[Hom]( t, \mathrm[Target]( \iota ) )$
 #! @Arguments iota
 @DeclareAttribute( "IndexOfNonliftableMorphismFromDistinguishedObject",
         IsCapCategoryMorphism );
@@ -63,10 +63,70 @@
 #!  The output is a morphism $\tau$ from the distinguished object
 #!  $t =$<C>DistinguishedObjectOfHomomorphismStructure</C>( $\mathbf[C]$ ) to <C>Range</C>( <A>iota</A> ),
 #!  such that <C>IsLiftableAlongMonomorphism</C>( <A>iota</A>, $\tau$ ) == <C>false</C>.
-#! @Returns a morphism in $\mathrm[Hom]( t, \mathrm[Range]( \iota ) )$
+#! @Returns a morphism in $\mathrm[Hom]( t, \mathrm[Target]( \iota ) )$
 #! @Arguments iota
 @DeclareAttribute( "NonliftableMorphismFromDistinguishedObject",
         IsCapCategoryMorphism );
+
+####################################
+##
+#! @Section Coproduct and direct product complements
+##
+####################################
+
+#! @Description
+#!  The argument is a morphism <A>iota</A>$: S \to T$ which is a coproduct injection of some binary coproduct.
+#!  The output is an object $C$ such that $S \sqcup C \cong T$.
+#! @Returns an object
+#! @Arguments iota
+@DeclareAttribute( "CoproductComplement",
+        IsCapCategoryMorphism );
+
+#! @Description
+#!  The argument is a morphism <A>iota</A>$: S \to T$ which is a coproduct injection of some binary coproduct.
+#!  The output is a coproduct injection $\iota_2: C \to T$ such that
+#!  <C>UniversalMorphismFromCoproduct</C>( <A>iota</A>, $\iota_2$ )$: S \sqcup C \to T$ is an isomorphism.
+#! @Returns a morphism in $\mathrm[Hom]( C, \mathrm[Target]( \iota ) )$
+#! @Arguments iota
+@DeclareAttribute( "InjectionOfCoproductComplement",
+        IsCapCategoryMorphism );
+
+#! @Description
+#!  The argument is a morphism <A>iota</A>$: S \to T$ which is a coproduct injection of some binary coproduct
+#!  and a coproduct complement <A>C</A>.
+#!  The output is a coproduct injection $\iota_2:$ <A>C</A> $\to T$ such that
+#!  <C>UniversalMorphismFromCoproduct</C>( <A>iota</A>, $\iota_2$ )$: S \sqcup C \to T$ is an isomorphism.
+#! @Returns a morphism in $\mathrm[Hom]( C, \mathrm[Target]( \iota ) )$
+#! @Arguments iota, C
+@DeclareOperation( "InjectionOfCoproductComplementWithGivenCoproductComplement",
+        [ IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
+#!  The argument is a morphism <A>pi</A>$: S \to T$ which is a product projection of some binary direct product.
+#!  The output is an object $C$ such that $S \times C \cong T$.
+#! @Returns an object
+#! @Arguments pi
+@DeclareAttribute( "DirectProductComplement",
+        IsCapCategoryMorphism );
+
+#! @Description
+#!  The argument is a morphism <A>pi</A>$: S \to T$ which is a direct product projection of some binary direct product.
+#!  The output is a direct product projection $\pi_2: C \to T$ such that
+#!  <C>UniversalMorphismIntoDirectProduct</C>( <A>pi</A>, $\pi_2$ )$: T \to S \times C$ is an isomorphism.
+#! @Returns a morphism in $\mathrm[Hom]( C, \mathrm[Target]( \pi ) )$
+#! @Arguments pi
+@DeclareAttribute( "ProjectionInDirectProductComplement",
+        IsCapCategoryMorphism );
+
+#! @Description
+#!  The argument is a morphism <A>pi</A>$: S \to T$ which is a direct product projection of some binary direct product
+#!  and a coproduct complement <A>C</A>.
+#!  The output is a direct product projection $\pi_2:$ <A>C</A> $\to T$ such that
+#!  <C>UniversalMorphismIntoDirectProduct</C>( <A>pi</A>, $\pi_2$ )$: T \to S \times C$ is an isomorphism.
+#! @Returns a morphism in $\mathrm[Hom]( C, \mathrm[Target]( \pi ) )$
+#! @Arguments pi, C
+@DeclareOperation( "ProjectionInDirectProductComplementWithGivenDirectProductComplement",
+        [ IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 ####################################
 ##
@@ -126,7 +186,7 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
 #! The argument is a monomorphism $m; A \rightarrow S$.
 #! The output is its classifying morphism
 #! $\chi_m; S \rightarrow \mathrm[SubobjectClassifier]$.
-#! @Returns a morphism in $\mathrm[Hom]( \mathrm[Range](m), \mathrm[SubobjectClassifier] )$
+#! @Returns a morphism in $\mathrm[Hom]( \mathrm[Target](m), \mathrm[SubobjectClassifier] )$
 #! @Arguments m
 @DeclareAttribute( "ClassifyingMorphismOfSubobject",
         IsCapCategoryMorphism );
@@ -135,7 +195,7 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
 #! The arguments are a monomorphism $m; A \rightarrow S$ and
 #! the subobject classifier $\Omega$. The output is the classifying morphism
 #! of the monomorphism $\chi_m; S \rightarrow \mathrm[SubobjectClassifier]$.
-#! @Returns a morphism in $\mathrm[Hom]( \mathrm[Range](m), \mathrm[SubobjectClassifier] )$
+#! @Returns a morphism in $\mathrm[Hom]( \mathrm[Target](m), \mathrm[SubobjectClassifier] )$
 #! @Arguments m, omega
 @DeclareOperation( "ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier",
         [ IsCapCategoryMorphism, IsCapCategoryObject ] );
@@ -309,6 +369,47 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
         [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
+#!  The argument is an object <A>a</A>.
+#!  The output is the power object evaluation morphism of $\epsilon_a: P(a) \times a \to \Omega$,
+#!  where $\Omega$ is the subobject classifier of <C>CapCategory</C>(<A>a</A>).
+#! @Arguments a
+#! @Returns a morphism in $\mathrm[Hom]( \mathrm[PowerObject](a) \times a, \Omega )$
+@DeclareAttribute( "PowerObjectEvaluationMorphism",
+        IsCapCategoryObject );
+
+#! @Description
+#!  The arguments are three objects <A>Pa_xa</A>, <A>a</A>, and <A>Omega</A>,
+#!  such that <A>Pa_xa</A>$= P(a) \times a$ and
+#!  <A>Omega</A> the subobject classifier of <C>CapCategory</C>(<A>a</A>).
+#!  The output is the power object evaluation morphism of $\epsilon_a:$ <A>Pa_xa</A> $\to$ <A>Omega</A>.
+#! @Arguments Pa_xa, a, Omega
+#! @Returns a morphism in $\mathrm[Hom]( Pa_xa, Omega )$
+@DeclareOperation( "PowerObjectEvaluationMorphismWithGivenObjects",
+        [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject ] );
+
+#! @Description
+#!  The arguments are two objects <A>a</A>, <A>b</A>,
+#!  a morphism <A>f</A>: <A>a</A> $\times$ <A>b</A> $\to \Omega$,
+#!  where $\Omega$ is the subobject classifier of <C>CapCategory</C>(<A>f</A>).
+#!  The output is the $P$-transpose morphism <A>a</A> $\to P(b)$,
+#!  where $P(b) =$ <C>PowerObject</C>( <A>b</A> ).
+#! @Arguments a, b, f
+#! @Returns a morphism in $\mathrm[Hom]( a, P(b) )$
+@DeclareOperation( "PTransposeMorphism",
+        [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism ] );
+
+#! @Description
+#!  The arguments are two objects <A>a</A>, <A>b</A>,
+#!  a morphism <A>f</A>: <A>a</A> $\times$ <A>b</A> $\to \Omega$, and an object <A>Pb</A>,
+#!  where $\Omega$ is the subobject classifier of <C>CapCategory</C>(<A>f</A>)
+#!  and <A>Pb</A> == <C>PowerObject</C>( <A>b</A> ).
+#!  The output is the $P$-transpose morphism <A>a</A> $\to$ <A>Pb</A>.
+#! @Arguments a, b, f, Pb
+#! @Returns a morphism in $\mathrm[Hom]( a, Pb )$
+@DeclareOperation( "PTransposeMorphismWithGivenRange",
+        [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
 #!  The arguments are two objects <A>a</A>, <A>b</A> in a category $C$
 #!  and a monomorphism <A>mu</A>$: r \hookrightarrow a \times b$ defining a relation
 #!  on $a \times b$.
@@ -329,7 +430,7 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
 #! @Arguments a, b, mu, Pb
 #! @Returns a morphism in $\mathrm[Hom]( a, Pb )$
 @DeclareOperation( "UpperSegmentOfRelationWithGivenRange",
-        [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism, IsObject ] );
+        [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ] );
 
 #! @Description
 #!  The arguments are two objects <A>a</A>, <A>b</A> in a category $C$
@@ -401,11 +502,29 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
 
 #! @Description
 #!  The input is a morphism <A>f</A>: $a \to b$.
-#!  The output is the embedding of the relative power object $P_f \hookrightarrow Pa \times b$,
+#!  The output is the embedding of the relative power object $P_fA \hookrightarrow Pa \times b$,
 #!  where $Pa$ == <C>PowerObject</C>($a$).
 #! @Arguments f
-#! @Returns a monomorphism $\mathrm[Hom]( P_f, Pa \times b )$
+#! @Returns a monomorphism $\mathrm[Hom]( P_fA, Pa \times b )$
 @DeclareAttribute( "EmbeddingOfRelativePowerObject",
+        IsCapCategoryMorphism );
+
+#! @Description
+#!  The input is a morphism <A>f</A>: $a \to b$.
+#!  The output is the fibration morphism $P_f: P_fA \rightarrow \times b$,
+#!  where is $P_fA$ the relative power object of <A>f</A>.
+#! @Arguments f
+#! @Returns a monomorphism $\mathrm[Hom]( P_fA, b )$
+@DeclareAttribute( "RelativePowerObjectFibrationMorphism",
+        IsCapCategoryMorphism );
+
+#! @Description
+#!  The input is a morphism <A>f</A>: $a \to b$.
+#!  The output is the evaluation morphism $P_fA \times a \rightarrow \Omega \times b$,
+#!  where $Pa$ == <C>PowerObject</C>($a$) and $P_fA$ is the relative power object of <A>f</A>.
+#! @Arguments f
+#! @Returns a monomorphism $\mathrm[Hom]( P_fA \times a, \Omega \times b )$
+@DeclareAttribute( "RelativePowerObjectEvaluationMorphism",
         IsCapCategoryMorphism );
 
 ####################################

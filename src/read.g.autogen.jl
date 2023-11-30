@@ -9,6 +9,7 @@ include( "gap/ToposMethodRecord.gi.autogen.jl" );
 include( "gap/Topos.gi.autogen.jl" );
 
 include( "gap/ToposDerivedMethods.gi.autogen.jl" );
+include( "gap/ToposDerivedMethods.semiautogen.gi.autogen.jl" );
 
 ## Category of relations
 include( "gap/CategoryOfRelations.gi.autogen.jl" );

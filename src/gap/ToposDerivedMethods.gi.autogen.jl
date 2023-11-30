@@ -8,18 +8,18 @@
 AddDerivationToCAP( IndexOfNonliftableMorphismFromDistinguishedObject,
         "IndexOfNonliftableMorphismFromDistinguishedObject as the index of the first nonliftable morphism in ExactCoverWithGlobalElements",
         [ [ ExactCoverWithGlobalElements, 1 ],
-          [ IsLiftableAlongMonomorphism, 1 ],
+          [ IsLiftableAlongMonomorphism, 2 ],
           [ ObjectDatum, 1 ] ],
         
   function( cat, iota )
     local target, global_morphisms;
     
-    target = Range( iota );
+    target = Target( iota );
     
     global_morphisms = ExactCoverWithGlobalElements( cat, target );
     
     ## start interval at 0 to unify ranges for the compiler
-    return 1 + SafeFirst( (0):(ObjectDatum( target ) - 1),
+    return 1 + SafeFirst( (0):(ObjectDatum( cat, target ) - 1),
                    i -> @not IsLiftableAlongMonomorphism( cat, iota, global_morphisms[1 + i] ) );
     
 end; CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
@@ -37,7 +37,7 @@ AddDerivationToCAP( NonliftableMorphismFromDistinguishedObject,
   function( cat, iota )
     local global_morphisms, index;
     
-    global_morphisms = ExactCoverWithGlobalElements( cat, Range( iota ) );
+    global_morphisms = ExactCoverWithGlobalElements( cat, Target( iota ) );
     
     index = IndexOfNonliftableMorphismFromDistinguishedObject( cat, iota );
     
@@ -47,6 +47,102 @@ end; CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
 CategoryFilter = function( cat )
     return HasRangeCategoryOfHomomorphismStructure( cat ) &&
            IsIdenticalObj( cat, RangeCategoryOfHomomorphismStructure( cat ) );
+end );
+
+##
+AddDerivationToCAP( InjectionOfCoproductComplement,
+        "InjectionOfCoproductComplement by iteratively calling NonliftableMorphismFromDistinguishedObject",
+        [ [ DistinguishedObjectOfHomomorphismStructure, 1 ],
+          [ ObjectDatum, 2 ],
+          [ NonliftableMorphismFromDistinguishedObject, 2 ],
+          [ UniversalMorphismFromCoproduct, 4 ],
+          [ UniversalMorphismFromInitialObject, 1 ] ],
+        
+  function( cat, iota )
+    local source, target, s, t, initial_complement, distinguished_object, predicate, func, initial;
+    
+    source = Source( iota );
+    
+    target = Target( iota );
+    
+    s = ObjectDatum( cat, source );
+    
+    t = ObjectDatum( cat, target );
+    
+    initial_complement = UniversalMorphismFromInitialObject( cat, target );
+    
+    if (s == t)
+        return initial_complement;
+    end;
+    
+    distinguished_object = DistinguishedObjectOfHomomorphismStructure( cat );
+    
+    predicate =
+      function( data_old, data_new )
+        
+        return data_new[3] == 0;
+        
+    end;
+    
+    func =
+      function( complement_coproduct_index )
+        local complement, coproduct, index, nonliftable, coproduct_new, complement_new;
+        
+        complement = complement_coproduct_index[1];
+        coproduct = complement_coproduct_index[2];
+        index = complement_coproduct_index[3];
+        
+        nonliftable = NonliftableMorphismFromDistinguishedObject( cat,
+                               coproduct );
+        
+        coproduct_new = UniversalMorphismFromCoproduct( cat,
+                                 [ Source( coproduct ), distinguished_object ],
+                                 target,
+                                 [ coproduct, nonliftable ] );
+        
+        complement_new = UniversalMorphismFromCoproduct( cat,
+                                  [ Source( complement ), distinguished_object ],
+                                  target,
+                                  [ complement, nonliftable ] );
+        
+        return Triple( complement_new,
+                       coproduct_new,
+                       index - 1 );
+        
+    end;
+    
+    initial = Triple( initial_complement,
+                       iota,
+                       t - s );
+    
+    return CapFixpoint( predicate, func, initial )[1];
+    
+end; CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
+CategoryFilter = function( cat )
+    return HasRangeCategoryOfHomomorphismStructure( cat ) &&
+           IsIdenticalObj( cat, RangeCategoryOfHomomorphismStructure( cat ) );
+end );
+
+##
+AddDerivationToCAP( CoproductComplement,
+        "CoproductComplement as the source of InjectionOfCoproductComplement",
+        [ [ InjectionOfCoproductComplement, 1 ] ],
+        
+  function( cat, mor )
+    
+    return Source( InjectionOfCoproductComplement( cat, mor ) );
+    
+end );
+
+##
+AddDerivationToCAP( DirectProductComplement,
+        "DirectProductComplement as the target of ProjectionInDirectProductComplement",
+        [ [ ProjectionInDirectProductComplement, 1 ] ],
+        
+  function( cat, mor )
+    
+    return Target( ProjectionInDirectProductComplement( cat, mor ) );
+    
 end );
 
 ## Page 20 in Peter Freyd, Aspect of topoi, Bull. Austral. Math. Soc, 7 (1972)
@@ -65,6 +161,62 @@ AddDerivationToCAP( ImageEmbedding,
                      InjectionOfCofactorOfPushout( cat, D, 2 ) ] );
     
 end );
+
+##
+AddDerivationToCAP( ImageEmbedding,
+        "ImageEmbedding as the colift along the coastriction to image",
+        [ [ CoastrictionToImage, 1 ],
+          [ ColiftAlongEpimorphism, 1 ] ],
+        
+  function( cat, mor )
+    
+    return ColiftAlongEpimorphism( cat,
+                   CoastrictionToImage( cat, mor ),
+                   mor );
+    
+end; CategoryFilter = IsElementaryTopos );
+
+##
+AddDerivationToCAP( ImageEmbeddingWithGivenImageObject,
+        "ImageEmbeddingWithGivenImageObject as the colift along the coastriction to image",
+        [ [ CoastrictionToImageWithGivenImageObject, 1 ],
+          [ ColiftAlongEpimorphism, 1 ] ],
+        
+  function( cat, mor, image_object )
+    
+    return ColiftAlongEpimorphism( cat,
+                   CoastrictionToImageWithGivenImageObject( cat, mor, image_object ),
+                   mor );
+    
+end; CategoryFilter = IsElementaryTopos );
+
+##
+AddDerivationToCAP( CoimageProjection,
+        "CoimageProjection as the lift along the astriction to coimage",
+        [ [ AstrictionToCoimage, 1 ],
+          [ LiftAlongMonomorphism, 1 ] ],
+        
+  function ( cat, mor )
+    
+    return LiftAlongMonomorphism( cat,
+                   AstrictionToCoimage( cat, mor ),
+                   mor );
+    
+end; CategoryFilter = IsElementaryTopos );
+
+##
+AddDerivationToCAP( CoimageProjectionWithGivenCoimageObject,
+        "CoimageProjectionWithGivenCoimageObject as the lift along the astriction to coimage",
+        [ [ AstrictionToCoimageWithGivenCoimageObject, 1 ],
+          [ LiftAlongMonomorphism, 1 ] ],
+        
+  function ( cat, mor, coimage_object )
+    
+    return LiftAlongMonomorphism( cat,
+                   AstrictionToCoimageWithGivenCoimageObject( cat, mor, coimage_object ),
+                   mor );
+    
+end; CategoryFilter = IsElementaryTopos );
 
 ##
 AddDerivationToCAP( SubobjectOfClassifyingMorphism,
@@ -281,6 +433,35 @@ AddDerivationToCAP( PowerObjectFunctorialWithGivenPowerObjects,
     
 end );
 
+## P(a) × a → Ω
+AddDerivationToCAP( PowerObjectEvaluationMorphismWithGivenObjects,
+        "PowerObjectEvaluationMorphismWithGivenObjects as a special case of the cartesian evaluation",
+        [ [ CartesianEvaluationMorphismWithGivenSource, 1 ] ],
+        
+  function( cat, Pa_xa, a, Omega )
+    
+    return CartesianEvaluationMorphismWithGivenSource( cat,
+                   a,
+                   Omega,
+                   Pa_xa );
+    
+end );
+
+## (f:a × b → Ω) ↦ (a → P(b))
+AddDerivationToCAP( PTransposeMorphismWithGivenRange,
+        "PTransposeMorphismWithGivenRange as a special case of the cartesian adjunction",
+        [ [ DirectProductToExponentialAdjunctionMapWithGivenExponential, 1 ] ],
+        
+  function( cat, a, b, f, Pb )
+    
+    return DirectProductToExponentialAdjunctionMapWithGivenExponential( cat,
+                   a,
+                   b,
+                   f,
+                   Pb );
+    
+end );
+
 ## Rewrite a relation μ:R ↪ a × b as a morphism a → P(b)
 AddDerivationToCAP( UpperSegmentOfRelationWithGivenRange,
         "",
@@ -364,7 +545,7 @@ AddDerivationToCAP( IsomorphismOntoCartesianSquareOfPowerObjectWithGivenObjects,
     diagram = [ Omega, Omega ];
     
     Omega2 = CartesianSquareOfSubobjectClassifier( cat );
-
+    
     Pa = PowerObject( cat, a );
     
     ## [ Exp(a, π₁): Exp(a, Ω²) ↠ Exp(a, Ω), Exp(a, π₂): Exp(a, Ω²) ↠ Exp(a, Ω) ]
@@ -404,12 +585,94 @@ end );
 ## ⊤_a: 𝟙 ↪ Pa
 AddDerivationToCAP( RelativeTruthMorphismOfTrueWithGivenObjects,
         "",
+        [ [ PreCompose, 2 ],
+          [ UniversalMorphismIntoTerminalObjectWithGivenTerminalObject, 1 ],
+          [ TruthMorphismOfTrue, 1 ],
+          [ DirectProduct, 1 ],
+          [ ProjectionInFactorOfDirectProductWithGivenDirectProduct, 1 ],
+          [ PTransposeMorphismWithGivenRange, 1 ] ],
+        
+  function( cat, T, a, Pa )
+    local true_a, T_a, Txa;
+    
+    ## true_a: a → 𝟙 → Ω
+    true_a = PreCompose( cat,
+                      ## a → 𝟙
+                      UniversalMorphismIntoTerminalObjectWithGivenTerminalObject( cat,
+                              a,
+                              T ),
+                      ## 𝟙 → Ω
+                      TruthMorphismOfTrue( cat ) );
+    
+    T_a = [ T, a ];
+    
+    ## 𝟙 × a
+    Txa = DirectProduct( cat, T_a );
+    
+    ## PTranspose( 𝟙 × a → a → 𝟙 → Ω ) == 𝟙 ↪ Pa
+    return PTransposeMorphismWithGivenRange( cat,
+                   T,
+                   a,
+                   PreCompose( cat,
+                           ProjectionInFactorOfDirectProductWithGivenDirectProduct( cat,
+                                   T_a,
+                                   2,
+                                   Txa ),
+                   true_a ),
+                   Pa );
+    
+end );
+
+## ⊥_a: 𝟙 ↪ Pa
+AddDerivationToCAP( RelativeTruthMorphismOfFalseWithGivenObjects,
+        "",
+        [ [ PreCompose, 2 ],
+          [ UniversalMorphismIntoTerminalObjectWithGivenTerminalObject, 1 ],
+          [ TruthMorphismOfFalse, 1 ],
+          [ DirectProduct, 1 ],
+          [ ProjectionInFactorOfDirectProductWithGivenDirectProduct, 1 ],
+          [ PTransposeMorphismWithGivenRange, 1 ] ],
+        
+  function( cat, T, a, Pa )
+    local false_a, T_a, Txa;
+    
+    ## false_a: a → 𝟙 → Ω
+    false_a = PreCompose( cat,
+                      ## a → 𝟙
+                      UniversalMorphismIntoTerminalObjectWithGivenTerminalObject( cat,
+                              a,
+                              T ),
+                      ## 𝟙 → Ω
+                      TruthMorphismOfFalse( cat ) );
+    
+    T_a = [ T, a ];
+    
+    ## 𝟙 × a
+    Txa = DirectProduct( cat, T_a );
+    
+    ## PTranspose( 𝟙 × a → a → 𝟙 → Ω ) == 𝟙 ↪ Pa
+    return PTransposeMorphismWithGivenRange( cat,
+                   T,
+                   a,
+                   PreCompose( cat,
+                           ProjectionInFactorOfDirectProductWithGivenDirectProduct( cat,
+                                   T_a,
+                                   2,
+                                   Txa ),
+                   false_a ),
+                   Pa );
+    
+end );
+
+## ⊤_a: 𝟙 ↪ Pa
+AddDerivationToCAP( RelativeTruthMorphismOfTrueWithGivenObjects,
+        "",
         [ [ ExponentialOnMorphismsWithGivenExponentials, 1 ],
           [ IdentityMorphism, 1 ],
           [ TruthMorphismOfTrue, 1 ] ],
         
   function( cat, T, a, Pa )
-
+    
     return ExponentialOnMorphismsWithGivenExponentials( cat,
                    T,
                    IdentityMorphism( cat, a ),
@@ -470,7 +733,7 @@ AddDerivationToCAP( RelativeTruthMorphismOfAndWithGivenObjects,
     Omega2 = CartesianSquareOfSubobjectClassifier( cat );
     
     Exp_a_Omega2 = ExponentialOnObjects( cat, a, Omega2 );
-
+    
     ## Exp(a, ∧): Exp(a, Ω²) → Exp(a, Ω)
     Exp_a_mor = ExponentialOnMorphismsWithGivenExponentials( cat,
                          Exp_a_Omega2,
@@ -509,7 +772,7 @@ AddDerivationToCAP( RelativeTruthMorphismOfOrWithGivenObjects,
     Omega2 = CartesianSquareOfSubobjectClassifier( cat );
     
     Exp_a_Omega2 = ExponentialOnObjects( cat, a, Omega2 );
-
+    
     ## Exp(a, ∨): Exp(a, Ω²) → Exp(a, Ω)
     Exp_a_mor = ExponentialOnMorphismsWithGivenExponentials( cat,
                          Exp_a_Omega2,
@@ -548,7 +811,7 @@ AddDerivationToCAP( RelativeTruthMorphismOfImpliesWithGivenObjects,
     Omega2 = CartesianSquareOfSubobjectClassifier( cat );
     
     Exp_a_Omega2 = ExponentialOnObjects( cat, a, Omega2 );
-
+    
     ## Exp(a, ⇒): Exp(a, Ω²) → Exp(a, Ω)
     Exp_a_mor = ExponentialOnMorphismsWithGivenExponentials( cat,
                          Exp_a_Omega2,
@@ -624,10 +887,10 @@ AddDerivationToCAP( EmbeddingOfIntersectionSubobject,
     return SubobjectOfClassifyingMorphism( ## ι1 ∧ ι2
                    cat,
                    PreCompose( cat,
-                           UniversalMorphismIntoDirectProduct( ## X == Range( ι1 ) == Range( ι2 ) → Ω × Ω
+                           UniversalMorphismIntoDirectProduct( ## X == Target( ι1 ) == Target( ι2 ) → Ω × Ω
                                    cat,
                                    [ Omega, Omega ],
-                                   Range( iota1 ),
+                                   Target( iota1 ),
                                    [ ClassifyingMorphismOfSubobject( cat, iota1 ), ## χ_ι1
                                      ClassifyingMorphismOfSubobject( cat, iota2 ) ] ), ## χ_ι2
                            TruthMorphismOfAnd( cat ) ) ); ## ∧: Ω × Ω → Ω
@@ -683,10 +946,10 @@ AddDerivationToCAP( EmbeddingOfUnionSubobject,
     
     return SubobjectOfClassifyingMorphism( cat, ## ι1 ∨ ι2
                    PreCompose( cat,
-                           UniversalMorphismIntoDirectProduct( ## X == Range( ι1 ) == Range( ι2 ) → Ω × Ω
+                           UniversalMorphismIntoDirectProduct( ## X == Target( ι1 ) == Target( ι2 ) → Ω × Ω
                                    cat,
                                    [ Omega, Omega ],
-                                   Range( iota1 ),
+                                   Target( iota1 ),
                                    [ ClassifyingMorphismOfSubobject( cat, iota1 ), ## χ_ι1
                                      ClassifyingMorphismOfSubobject( cat, iota2 ) ] ), ## χ_ι2
                            TruthMorphismOfOr( cat ) ) ); ## ∨: Ω × Ω → Ω
@@ -704,8 +967,8 @@ AddDerivationToCAP( EmbeddingOfUnionSubobject,
     return ImageEmbedding( cat,
                    UniversalMorphismFromCoproduct( cat,
                            [ Source( iota1 ), Source( iota2 ) ],
-                           Range( iota1 ),
-                           [ iota1, iota2 ] ) );  ## [ ι1, ι2 ]; Source( ι1 ) ⊔ Source( ι2 ) → Range( ι1 )
+                           Target( iota1 ),
+                           [ iota1, iota2 ] ) );  ## [ ι1, ι2 ]; Source( ι1 ) ⊔ Source( ι2 ) → Target( ι1 )
     
 end );
 
@@ -737,9 +1000,9 @@ AddDerivationToCAP( EmbeddingOfRelativePseudoComplementSubobject,
     
     return SubobjectOfClassifyingMorphism( cat, ## ι1 ⇒ ι2
                    PreCompose( cat,
-                           UniversalMorphismIntoDirectProduct( cat, ## X == Range( ι1 ) == Range( ι2 ) → Ω × Ω
+                           UniversalMorphismIntoDirectProduct( cat, ## X == Target( ι1 ) == Target( ι2 ) → Ω × Ω
                                    [ Omega, Omega ],
-                                   Range( iota1 ),
+                                   Target( iota1 ),
                                    [ ClassifyingMorphismOfSubobject( cat, iota1 ), ## χ_ι1
                                      ClassifyingMorphismOfSubobject( cat, iota2 ) ] ), ## χ_ι2
                            TruthMorphismOfImplies( cat ) ) ); ## ⇒: Ω × Ω → Ω
@@ -754,6 +1017,111 @@ AddDerivationToCAP( RelativePseudoComplementSubobject,
   function( cat, iota1, iota2 )
     
     return Source( EmbeddingOfRelativePseudoComplementSubobject( cat, iota1, iota2 ) );
+    
+end );
+
+## [MacLane-Moerdijk, p.168]
+AddDerivationToCAP( ExponentialOnObjects,
+        "ExponentialOnObjects from the power object, the power object evaluation morphism, and the P-transpose",
+        [ [ PowerObject, 4 ],
+          [ DirectProduct, 4 ],
+          [ SubobjectClassifier, 1 ],
+          [ PowerObjectEvaluationMorphismWithGivenObjects, 1 ],
+          [ CartesianAssociatorRightToLeftWithGivenDirectProducts, 1 ],
+          [ PreCompose, 2 ],
+          [ PTransposeMorphismWithGivenRange, 2 ],
+          [ SingletonMorphismWithGivenPowerObject, 1 ],
+          [ ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier, 1 ],
+          [ TerminalObject, 1 ],
+          [ RelativeTruthMorphismOfTrueWithGivenObjects, 1 ],
+          [ FiberProduct, 1 ] ],
+        
+  function( cat, B, C )
+    local PB, PC, B_C, BxC, PBxC, PBxC_BxC, PBxC_xBxC, Omega, epsilon, PBxC_xB, PBxC_xB_xC, alpha, epsilon_, v, sing, sigma, v_sigma, u, true_B;
+    
+    PB = PowerObject( B );
+    PC = PowerObject( C );
+    
+    B_C = [ B, C ];
+    
+    ## B × C
+    BxC = DirectProduct( cat, B_C );
+    
+    ## P(B × C)
+    PBxC = PowerObject( cat, BxC );
+    
+    PBxC_BxC = [ PBxC, BxC ];
+    
+    ## P(B × C) × (B × C)
+    PBxC_xBxC = DirectProduct( cat, PBxC_BxC );
+    
+    ## Ω
+    Omega = SubobjectClassifier( cat );
+    
+    ## ϵ_[B × C]; P(B × C) × (B × C) → Ω
+    epsilon = PowerObjectEvaluationMorphismWithGivenObjects( cat,
+                       PBxC_xBxC,
+                       BxC,
+                       Omega );
+    
+    ## P(B × C) × B
+    PBxC_xB = DirectProduct( cat,
+                       [ PBxC, B ] );
+    
+    ## (P(B × C) × B) × C
+    PBxC_xB_xC = DirectProduct( cat,
+                          [ PBxC_xB, C ] );
+    
+    ## P(B × C) × (B × C) → (P(B × C) × B) × C
+    alpha = CartesianAssociatorRightToLeftWithGivenDirectProducts( cat,
+                     PBxC_xBxC,
+                     PBxC,
+                     B,
+                     C,
+                     PBxC_xB_xC );
+    
+    ## ϵ_[B × C]; (P(B × C) × B) × C → Ω
+    epsilon_ = PreCompose( cat,
+                        alpha,
+                        epsilon );
+    
+    ## v: P(B × C) × B → PC
+    v = PTransposeMorphismWithGivenRange( cat,
+                 PBxC_xB,
+                 C,
+                 epsilon_,
+                 PC );
+    
+    ## []_C: C → PC
+    sing = SingletonMorphismWithGivenPowerObject( cat,
+                    C,
+                    PC );
+    
+    ## σ_C: PC → Ω
+    sigma = ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier( cat,
+                     sing,
+                     Omega );
+    
+    ## v σ_C: P(B × C) × B → Ω
+    v_sigma = PreCompose( cat,
+                       v,
+                       sigma );
+    
+    ## u: P(B × C) → PB
+    u = PTransposeMorphismWithGivenRange( cat,
+                 PBxC,
+                 B,
+                 v_sigma,
+                 PowerObject( cat, B ) );
+    
+    ## 𝟙 ↪ PB
+    true_B = RelativeTruthMorphismOfTrueWithGivenObjects( cat,
+                      TerminalObject( cat ),
+                      B,
+                      PB );
+    
+    return FiberProduct( cat,
+                   [ u, true_B ] );
     
 end );
 
@@ -806,122 +1174,13 @@ AddDerivationToCAP( ListOfSubobjects,
     
 end );
 
-##  A <-f-- X
-##  |       |
-##  |       |
-##  x       g
-##  |       |
-##  v       v
-##  D <-y-- B
-
-##
-AddDerivationToCAP( HasPushoutComplement,
-        "",
-        [ [ EmbeddingOfRelativePseudoComplementSubobject, 1 ],
-          [ EmbeddingOfUnionSubobject, 2 ],
-          [ FiberProduct, 7 ],
-          [ IdentityMorphism, 4 ],
-          [ ImageEmbedding, 6 ],
-          [ IsDominating, 1 ],
-          [ IsEqualAsSubobjects, 1 ],
-          [ PreCompose, 14 ],
-          [ ProjectionInFactorOfFiberProductWithGivenFiberProduct, 14 ],
-          [ UniversalMorphismIntoDirectProduct, 6 ],
-          [ UniversalMorphismIntoTerminalObject, 3 ] ],
-        
-  # generated by examples/precompile_derivations_pushout_complement.g
-  function ( cat_1, f_1, x_1 )
-    local deduped_1_1, deduped_2_1, deduped_3_1, deduped_4_1, deduped_5_1, deduped_6_1, deduped_7_1, deduped_8_1, deduped_9_1, deduped_10_1, deduped_11_1, deduped_12_1, deduped_13_1, deduped_14_1, deduped_15_1, deduped_16_1, deduped_17_1, deduped_18_1, deduped_19_1, deduped_20_1, deduped_21_1, deduped_22_1, deduped_23_1, deduped_24_1, deduped_25_1, deduped_26_1, deduped_27_1, deduped_28_1, deduped_29_1, deduped_30_1, deduped_31_1, deduped_32_1, deduped_33_1;
-    deduped_32_1 = Range( x_1 );
-    deduped_31_1 = Source( f_1 );
-    deduped_30_1 = Source( x_1 );
-    deduped_28_1 = UniversalMorphismIntoTerminalObject( cat_1, deduped_32_1 );
-    deduped_27_1 = IdentityMorphism( cat_1, deduped_32_1 );
-    deduped_26_1 = UniversalMorphismIntoTerminalObject( cat_1, deduped_31_1 );
-    deduped_25_1 = IdentityMorphism( cat_1, deduped_31_1 );
-    deduped_24_1 = IdentityMorphism( cat_1, deduped_30_1 );
-    deduped_22_1 = [ deduped_24_1, f_1 ];
-    deduped_21_1 = [ deduped_24_1, deduped_24_1 ];
-    deduped_15_1 = FiberProduct( cat_1, deduped_22_1 );
-    deduped_14_1 = FiberProduct( cat_1, deduped_21_1 );
-    deduped_13_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_21_1, 2, deduped_14_1 ), UniversalMorphismIntoTerminalObject( cat_1, deduped_30_1 ) );
-    deduped_12_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_21_1, 1, deduped_14_1 ), x_1 );
-    deduped_10_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_22_1, 2, deduped_15_1 ), deduped_25_1 ), deduped_25_1 ];
-    deduped_8_1 = FiberProduct( cat_1, deduped_10_1 );
-    deduped_7_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 2, deduped_8_1 ), deduped_26_1 );
-    deduped_6_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 1, deduped_8_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_22_1, 1, deduped_15_1 ), x_1 ) );
-    deduped_5_1 = ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_12_1 ), Range( deduped_13_1 ) ], deduped_14_1, [ deduped_12_1, deduped_13_1 ] ) );
-    if (IsEqualAsSubobjects( cat_1, EmbeddingOfUnionSubobject( cat_1, deduped_5_1, EmbeddingOfRelativePseudoComplementSubobject( cat_1, deduped_5_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_6_1 ), Range( deduped_7_1 ) ], deduped_8_1, [ deduped_6_1, deduped_7_1 ] ) ) ) ), ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_27_1 ), Range( deduped_28_1 ) ], deduped_32_1, [ deduped_27_1, deduped_28_1 ] ) ) ) == false)
-        return false;
-    else
-        deduped_33_1 = [ x_1, x_1 ];
-        deduped_29_1 = FiberProduct( cat_1, deduped_33_1 );
-        deduped_23_1 = [ deduped_25_1, deduped_25_1 ];
-        deduped_20_1 = Source( deduped_24_1 );
-        deduped_19_1 = FiberProduct( cat_1, deduped_23_1 );
-        deduped_18_1 = IdentityMorphism( cat_1, deduped_20_1 );
-        deduped_17_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_33_1, 2, deduped_29_1 ), deduped_24_1 );
-        deduped_16_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_33_1, 1, deduped_29_1 ), deduped_24_1 );
-        deduped_11_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_23_1, 2, deduped_19_1 ), deduped_26_1 ), deduped_26_1 ];
-        deduped_9_1 = FiberProduct( cat_1, deduped_11_1 );
-        deduped_4_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 2, deduped_9_1 ), deduped_25_1 ), deduped_25_1 ];
-        deduped_3_1 = FiberProduct( cat_1, deduped_4_1 );
-        deduped_2_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_4_1, 2, deduped_3_1 ), f_1 );
-        deduped_1_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_4_1, 1, deduped_3_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 1, deduped_9_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_23_1, 1, deduped_19_1 ), f_1 ) ) );
-        return IsDominating( cat_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_16_1 ), Range( deduped_17_1 ) ], deduped_29_1, [ deduped_16_1, deduped_17_1 ] ) ), EmbeddingOfUnionSubobject( cat_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_18_1 ), Range( deduped_24_1 ) ], deduped_20_1, [ deduped_18_1, deduped_24_1 ] ) ), ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_1_1 ), Range( deduped_2_1 ) ], deduped_3_1, [ deduped_1_1, deduped_2_1 ] ) ) ) );
-    end;
-    return;
-end );
-
-##
-
-#  A <--f-- X
-#  |        |
-#  x        g
-#  |        |
-#  v        v
-#  D <--y-- B
-AddDerivationToCAP( PushoutComplement,
-        "",
-        [ [ EmbeddingOfRelativePseudoComplementSubobject, 1 ],
-          [ FiberProduct, 3 ],
-          [ IdentityMorphism, 2 ],
-          [ ImageEmbedding, 3 ],
-          [ PreCompose, 7 ],
-          [ ProjectionInFactorOfDirectProductWithGivenDirectProduct, 1 ],
-          [ ProjectionInFactorOfFiberProductWithGivenFiberProduct, 6 ],
-          [ TerminalObject, 1 ],
-          [ UniversalMorphismIntoDirectProduct, 2 ],
-          [ UniversalMorphismIntoTerminalObject, 2 ] ],
-        
-  # generated by examples/precompile_derivations_pushout_complement.g
-  function ( cat_1, f_1, x_1 )
-    local deduped_1_1, deduped_2_1, deduped_3_1, deduped_4_1, deduped_5_1, deduped_6_1, deduped_7_1, deduped_8_1, deduped_9_1, deduped_10_1, deduped_11_1, deduped_12_1, deduped_13_1, deduped_14_1, deduped_15_1;
-    deduped_15_1 = Source( f_1 );
-    deduped_14_1 = Source( x_1 );
-    deduped_13_1 = IdentityMorphism( cat_1, deduped_15_1 );
-    deduped_12_1 = IdentityMorphism( cat_1, deduped_14_1 );
-    deduped_11_1 = [ deduped_12_1, f_1 ];
-    deduped_10_1 = [ deduped_12_1, deduped_12_1 ];
-    deduped_9_1 = FiberProduct( cat_1, deduped_11_1 );
-    deduped_8_1 = FiberProduct( cat_1, deduped_10_1 );
-    deduped_7_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 2, deduped_8_1 ), UniversalMorphismIntoTerminalObject( cat_1, deduped_14_1 ) );
-    deduped_6_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_10_1, 1, deduped_8_1 ), x_1 );
-    deduped_5_1 = [ PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 2, deduped_9_1 ), deduped_13_1 ), deduped_13_1 ];
-    deduped_4_1 = FiberProduct( cat_1, deduped_5_1 );
-    deduped_3_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_5_1, 2, deduped_4_1 ), UniversalMorphismIntoTerminalObject( cat_1, deduped_15_1 ) );
-    deduped_2_1 = PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_5_1, 1, deduped_4_1 ), PreCompose( cat_1, ProjectionInFactorOfFiberProductWithGivenFiberProduct( cat_1, deduped_11_1, 1, deduped_9_1 ), x_1 ) );
-    deduped_1_1 = EmbeddingOfRelativePseudoComplementSubobject( cat_1, ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_6_1 ), Range( deduped_7_1 ) ], deduped_8_1, [ deduped_6_1, deduped_7_1 ] ) ), ImageEmbedding( cat_1, UniversalMorphismIntoDirectProduct( cat_1, [ Range( deduped_2_1 ), Range( deduped_3_1 ) ], deduped_4_1, [ deduped_2_1, deduped_3_1 ] ) ) );
-    return ImageEmbedding( cat_1, PreCompose( cat_1, deduped_1_1, ProjectionInFactorOfDirectProductWithGivenDirectProduct( cat_1, [ Range( x_1 ), TerminalObject( cat_1 ) ], 1, Range( deduped_1_1 ) ) ) );
-end );
-
 ##
 AddDerivationToCAP( LawvereTierneyLocalModalityOperators,
         "",
-        [ [ DirectProductFunctorial, 1 ],
-          [ IsEqualForMorphisms, 3 ],
+        [ [ DirectProductFunctorial, 2 ],
+          [ IsEqualForMorphisms, 6 ],
           [ MorphismsOfExternalHom, 1 ],
-          [ PreCompose, 4 ],
+          [ PreCompose, 8 ],
           [ SubobjectClassifier, 1 ],
           [ TruthMorphismOfAnd, 1 ],
           [ TruthMorphismOfTrue, 1 ] ],
@@ -996,23 +1255,28 @@ AddDerivationToCAP( HomomorphismStructureOnMorphismsWithGivenObjects,
           [ UniversalMorphismFromCoproductWithGivenCoproduct, 1, RangeCategoryOfHomomorphismStructure ] ],
         
   function( cat, source, alpha, gamma, range )
-    local range_cat, distinguished_object, Ls, tau;
+    local range_cat, distinguished_object, Ls, source_alpha, range_gamma, tau;
     
     range_cat = RangeCategoryOfHomomorphismStructure( cat );
     distinguished_object = DistinguishedObjectOfHomomorphismStructure( cat );
     
     Ls = ExactCoverWithGlobalElements( range_cat, source );
     
+    source_alpha = Source( alpha );
+    range_gamma = Target( gamma );
+    
     tau = List( Ls, mor ->
                  InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects( cat,
                          distinguished_object,
                          PreComposeList( cat,
+                                 source_alpha,
                                  [ alpha,
                                    InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism( cat,
-                                           Range( alpha ),
+                                           Target( alpha ),
                                            Source( gamma ),
                                            mor ),
-                                   gamma ] ),
+                                   gamma ],
+                                 range_gamma ),
                          range ) );
     
     return UniversalMorphismFromCoproductWithGivenCoproduct( range_cat,
@@ -1025,14 +1289,63 @@ end,
   CategoryGetters = @rec( range_cat = RangeCategoryOfHomomorphismStructure ),
   CategoryFilter = cat -> HasRangeCategoryOfHomomorphismStructure( cat ) );
 
+##
+AddDerivationToCAP( CoimageProjectionWithGivenCoimageObject,
+        "CoimageProjection as the coastriction to image",
+        [ [ ImageObject, 1 ],
+          [ CoastrictionToImageWithGivenImageObject, 1 ],
+          [ InverseOfMorphismFromCoimageToImageWithGivenObjects, 1 ],
+          [ PreCompose, 1 ] ],
+        
+  function( cat, mor, coimage )
+    local image, coast, iso;
+    
+    image = ImageObject( cat, mor );
+    
+    coast = CoastrictionToImageWithGivenImageObject( cat, mor, image );
+    
+    iso = InverseOfMorphismFromCoimageToImageWithGivenObjects( cat, image, mor, coimage );
+    
+    return PreCompose( cat, coast, iso );
+    
+end );
+
+##
+AddDerivationToCAP( MorphismFromCoimageToImageWithGivenObjects,
+                    "MorphismFromCoimageToImageWithGivenObjects using that the image embedding lifts the coimage astriction",
+                    [ [ ImageEmbeddingWithGivenImageObject, 1 ],
+                      [ AstrictionToCoimageWithGivenCoimageObject, 1 ],
+                      [ LiftAlongMonomorphism, 1 ] ],
+                    
+  function( cat, coimage, morphism, image )
+    
+    return LiftAlongMonomorphism( cat,
+                   ImageEmbeddingWithGivenImageObject( cat, morphism, image ),
+                   AstrictionToCoimageWithGivenCoimageObject( cat, morphism, coimage ) );
+    
+end; CategoryFilter = IsElementaryTopos );
+
+##
+AddDerivationToCAP( InverseOfMorphismFromCoimageToImageWithGivenObjects,
+                    "InverseOfMorphismFromCoimageToImageWithGivenObjects as the inverse of MorphismFromCoimageToImage",
+                    [ [ InverseForMorphisms, 1 ],
+                      [ MorphismFromCoimageToImageWithGivenObjects, 1 ] ],
+                    
+  function( cat, image, morphism, coimage )
+    
+    return InverseForMorphisms( cat, MorphismFromCoimageToImageWithGivenObjects( cat, coimage, morphism, image ) );
+    
+end; CategoryFilter = IsElementaryTopos );
+
 ## Final derivations
 
 ##
-AddFinalDerivationBundle( "CanonicalIdentificationFromImageObjectToCoimage as the identity on the image object",
+AddFinalDerivationBundle( "MorphismFromCoimageToImageWithGivenObjects as the identity on the image object",
         [ [ ImageObject, 1 ],
           [ IdentityMorphism, 1 ] ],
-        [ CanonicalIdentificationFromCoimageToImageObject,
-          CanonicalIdentificationFromImageObjectToCoimage,
+        [ CoimageObject,
+          MorphismFromCoimageToImageWithGivenObjects,
+          InverseOfMorphismFromCoimageToImageWithGivenObjects,
           CoimageObject,
           CoimageProjection,
           CoimageProjectionWithGivenCoimageObject,
@@ -1044,33 +1357,41 @@ AddFinalDerivationBundle( "CanonicalIdentificationFromImageObjectToCoimage as th
           IsomorphismFromCokernelOfKernelToCoimage ],
         
 [
-  CanonicalIdentificationFromImageObjectToCoimage,
-  [ [ ImageObject, 1 ],
-    [ IdentityMorphism, 1 ] ],
+  CoimageObject,
+  [ [ ImageObject, 1 ] ],
   function( cat, mor )
     
-    return IdentityMorphism( cat, ImageObject( cat, mor ) );
+    return ImageObject( cat, mor );
     
   end
 ],
 [
-  CanonicalIdentificationFromCoimageToImageObject,
-  [ [ ImageObject, 1 ],
-    [ IdentityMorphism, 1 ] ],
-  function( cat, mor )
+  MorphismFromCoimageToImageWithGivenObjects,
+  [ [ IdentityMorphism, 1 ] ],
+  function( cat, coimage, mor, image )
     
-    return IdentityMorphism( cat, ImageObject( cat, mor ) );
+    return IdentityMorphism( cat, image );
+    
+  end
+],
+[
+  InverseOfMorphismFromCoimageToImageWithGivenObjects,
+  [ [ IdentityMorphism, 1 ] ],
+  function( cat, image, mor, coimage )
+    
+    return IdentityMorphism( cat, image );
     
   end
 ]; CategoryFilter = IsElementaryTopos );
 
 ##
 AddFinalDerivationBundle( "adding the homomorphism structure using MorphismsOfExternalHom",
-        [ [ TerminalObject, 1 ],
+        [ [ TerminalObject, 1, RangeCategoryOfHomomorphismStructure ],
           [ MorphismsOfExternalHom, 2 ],
-          [ ObjectConstructor, 1 ],
+          [ MorphismsOfExternalHom, 1, RangeCategoryOfHomomorphismStructure ],
+          [ ObjectConstructor, 1, RangeCategoryOfHomomorphismStructure ],
           [ PreComposeList, 2 ],
-          [ MorphismConstructor, 1 ],
+          [ MorphismConstructor, 1, RangeCategoryOfHomomorphismStructure ],
           ],
         [ DistinguishedObjectOfHomomorphismStructure,
           HomomorphismStructureOnObjects,
@@ -1083,16 +1404,19 @@ AddFinalDerivationBundle( "adding the homomorphism structure using MorphismsOfEx
         
 [
   DistinguishedObjectOfHomomorphismStructure,
-  [ [ TerminalObject, 1 ] ],
+  [ [ TerminalObject, 1, RangeCategoryOfHomomorphismStructure ] ],
   function( cat )
+    local H;
     
-    return TerminalObject( RangeCategoryOfHomomorphismStructure( cat ) );
+    H = RangeCategoryOfHomomorphismStructure( cat );
+    
+    return TerminalObject( H );
     
   end
 ],
 [
   HomomorphismStructureOnObjects,
-  [ [ ObjectConstructor, 1 ],
+  [ [ ObjectConstructor, 1, RangeCategoryOfHomomorphismStructure ],
     [ MorphismsOfExternalHom, 1 ] ],
   function( cat, a, b )
     local H;
@@ -1108,18 +1432,21 @@ AddFinalDerivationBundle( "adding the homomorphism structure using MorphismsOfEx
   HomomorphismStructureOnMorphismsWithGivenObjects,
   [ [ MorphismsOfExternalHom, 2 ],
     [ PreComposeList, 2 ],
-    [ MorphismConstructor, 1 ] ],
+    [ MorphismConstructor, 1, RangeCategoryOfHomomorphismStructure ] ],
   function( cat, s, alpha, gamma, r )
-    local H, s_mors, r_mors, images;
+    local H, source_alpha, range_gamma, s_mors, r_mors, images;
     
     H = RangeCategoryOfHomomorphismStructure( cat );
     
-    # r_mor == alpha s_mor gamma == Source( alpha ) --alpha-> Range( alpha ) --s_mor-> Source( gamma ) --gamma-> Range( gamma )
+    source_alpha = Source( alpha );
+    range_gamma = Target( gamma );
     
-    s_mors = MorphismsOfExternalHom( cat, Range( alpha ), Source( gamma ) );
-    r_mors = MorphismsOfExternalHom( cat, Source( alpha ), Range( gamma ) );
+    # r_mor == alpha s_mor gamma == Source( alpha ) --alpha-> Target( alpha ) --s_mor-> Source( gamma ) --gamma-> Target( gamma )
     
-    images = List( s_mors, s_mor -> -1 + SafePosition( r_mors, PreComposeList( cat, [ alpha, s_mor, gamma ] ) ) );
+    s_mors = MorphismsOfExternalHom( cat, Target( alpha ), Source( gamma ) );
+    r_mors = MorphismsOfExternalHom( cat, Source( alpha ), Target( gamma ) );
+    
+    images = List( s_mors, s_mor -> -1 + SafePosition( r_mors, PreComposeList( cat, source_alpha, [ alpha, s_mor, gamma ], range_gamma ) ) );
     
     return MorphismConstructor( H,
                    s,
@@ -1131,13 +1458,13 @@ AddFinalDerivationBundle( "adding the homomorphism structure using MorphismsOfEx
 [
   InterpretMorphismAsMorphismFromDistinguishedObjectToHomomorphismStructureWithGivenObjects,
   [ [ MorphismsOfExternalHom, 1 ],
-    [ MorphismConstructor, 1 ] ],
+    [ MorphismConstructor, 1, RangeCategoryOfHomomorphismStructure ] ],
   function( cat, t, alpha, r )
     local H, mors;
     
     H = RangeCategoryOfHomomorphismStructure( cat );
     
-    mors = MorphismsOfExternalHom( cat, Source( alpha ), Range( alpha ) );
+    mors = MorphismsOfExternalHom( cat, Source( alpha ), Target( alpha ) );
     
     return MorphismConstructor( H,
                    t,
@@ -1148,23 +1475,25 @@ AddFinalDerivationBundle( "adding the homomorphism structure using MorphismsOfEx
 ],
 [
   InterpretMorphismFromDistinguishedObjectToHomomorphismStructureAsMorphism,
-  [ [ MorphismsOfExternalHom, 2 ] ],
+  [ [ MorphismsOfExternalHom, 1 ],
+    [ MorphismsOfExternalHom, 1, RangeCategoryOfHomomorphismStructure ] ],
   function( cat, a, b, iota )
     local H, mors_H, pos;
     
     H = RangeCategoryOfHomomorphismStructure( cat );
     
     # 1_H -> Hom( a, b )
-    mors_H = MorphismsOfExternalHom( H, Source( iota ), Range( iota ) );
+    mors_H = MorphismsOfExternalHom( H, Source( iota ), Target( iota ) );
     
     pos = SafePosition( mors_H, iota );
     
     return MorphismsOfExternalHom( cat, a, b )[pos];
     
   end
-]; CategoryFilter = function( cat )
+]; CategoryGetters = @rec( H = RangeCategoryOfHomomorphismStructure ),
+    CategoryFilter = function( cat )
       return HasRangeCategoryOfHomomorphismStructure( cat ) &&
-             IsBoundGlobal( "IsCategoryOfSkeletalFinSets" ) &&
-             ValueGlobal( "IsCategoryOfSkeletalFinSets" )( RangeCategoryOfHomomorphismStructure( cat ) );
+             IsBoundGlobal( "IsSkeletalCategoryOfFiniteSets" ) &&
+             ValueGlobal( "IsSkeletalCategoryOfFiniteSets" )( RangeCategoryOfHomomorphismStructure( cat ) );
     end
 );
