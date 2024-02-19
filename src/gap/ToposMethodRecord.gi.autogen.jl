@@ -7,12 +7,6 @@
 ##
 @InstallValueConst( TOPOS_METHOD_NAME_RECORD, @rec(
 
-MorphismsOfExternalHom = @rec(
-  filter_list = [ "category", "object", "object" ],
-  return_type = "list_of_morphisms",
-  dual_operation = "MorphismsOfExternalHom",
-  dual_arguments_reversed = true ),
-
 ExactCoverWithGlobalElements = @rec(
   filter_list = [ "category", "object" ],
   return_type = "list_of_morphisms" ),
@@ -266,7 +260,7 @@ PowerObjectFunctorialWithGivenPowerObjects = @rec(
   output_range_getter_preconditions = [ ],
 ),
 
-PowerObjectEvaluationMorphism = @rec(
+PowerObjectLeftEvaluationMorphism = @rec(
   filter_list = [ "category", "object" ],
   return_type = "morphism",
   input_arguments_names = [ "cat", "a" ],
@@ -276,7 +270,7 @@ PowerObjectEvaluationMorphism = @rec(
   output_range_getter_preconditions = [ [ "SubobjectClassifier", 1 ] ],
   with_given_object_position = "both" ),
 
-PowerObjectEvaluationMorphismWithGivenObjects = @rec(
+PowerObjectLeftEvaluationMorphismWithGivenObjects = @rec(
   filter_list = [ "category", "object", "object", "object" ],
   return_type = "morphism",
   input_arguments_names = [ "cat", "Pa_xa", "a", "Omega" ],
@@ -470,7 +464,7 @@ RelativeTruthMorphismOfOr = @rec(
   filter_list = [ "category", "object" ],
   return_type = "morphism",
   input_arguments_names = [ "cat", "a" ],
-  output_source_getter_string = "DirectProduct( cat, [ PowerObject( cat, a ), PowerObject( cat, a ) ] )",
+  output_source_getter_string = "BinaryDirectProduct( cat, PowerObject( cat, a ), PowerObject( cat, a ) )",
   output_source_getter_preconditions = [ [ "DirectProduct", 1 ], [ "PowerObject", 2 ] ],
   output_range_getter_string = "PowerObject( cat, a )",
   output_range_getter_preconditions = [ [ "PowerObject", 1 ] ],
@@ -505,6 +499,25 @@ RelativeTruthMorphismOfImpliesWithGivenObjects = @rec(
   output_range_getter_string = "Pa",
   output_range_getter_preconditions = [ ],
 ),
+
+FiberMorphism = @rec(
+  filter_list = [ "category", "object", "object" ],
+  return_type = "morphism",
+  input_arguments_names = [ "cat", "b", "c" ],
+  output_source_getter_string = "DirectProduct( cat, [ PowerObject( cat, DirectProduct( cat, [ b, c ] ) ), b ] )",
+  output_source_getter_preconditions = [ [ "DirectProduct", 2 ], [ "PowerObject", 1 ] ],
+  output_range_getter_string = "PowerObject( cat, c )",
+  output_range_getter_preconditions = [ [ "PowerObject", 1 ] ],
+  with_given_object_position = "both" ),
+
+FiberMorphismWithGivenObjects = @rec(
+  filter_list = [ "category", "object", "object", "object", "object" ],
+  return_type = "morphism",
+  input_arguments_names = [ "cat", "Pbxc_b", "b", "c", "Pc" ],
+  output_source_getter_string = "Pbxc_b",
+  output_source_getter_preconditions = [ ],
+  output_range_getter_string = "Pc",
+  output_range_getter_preconditions = [ ] ),
 
 ListOfSubobjects = @rec(
   filter_list = [ "category", "object" ],

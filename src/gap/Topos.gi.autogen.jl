@@ -137,7 +137,7 @@ InstallMethod( @__MODULE__,  RelativePowerObjectFibrationMorphism,
     
     ## π₂: PA × B → B
     pi_2 = ProjectionInFactorOfDirectProductWithGivenDirectProduct( C,
-                    [ PowerObject( A ), B ],
+                    [ PowerObject( C, A ), B ],
                     2,
                     Target( e ) );
     
@@ -160,7 +160,7 @@ InstallMethod( @__MODULE__,  RelativePowerObjectFibrationMorphism,
 end );
 
 ##
-InstallMethod( @__MODULE__,  RelativePowerObjectEvaluationMorphism,
+InstallMethod( @__MODULE__,  RelativePowerObjectLeftEvaluationMorphism,
         "for a category and a morphism",
         [ IsCapCategory, IsCapCategoryMorphism ],
         
@@ -202,14 +202,14 @@ InstallMethod( @__MODULE__,  RelativePowerObjectEvaluationMorphism,
     P_fA_A = [ P_fA, A ];
     PAxB_A = [ PAxB, A ];
     
-    PAxB_xA = DirectProduct( PAxB_A );
+    PAxB_xA = DirectProduct( C, PAxB_A );
     
     ## P_fA ↪ PA × B
     e = EmbeddingOfRelativePowerObject( C, f );
     
     ## e × 1_A: P_fA × A → (PA × B) × A
     eA = DirectProductFunctorialWithGivenDirectProducts( C,
-                  DirectProduct( P_fA_A ),
+                  DirectProduct( C, P_fA_A ),
                   P_fA_A,
                   [ e, IdentityMorphism( C, A ) ],
                   PAxB_A,
@@ -255,7 +255,7 @@ InstallMethod( @__MODULE__,  RelativePowerObjectEvaluationMorphism,
     Omega = SubobjectClassifier( C );
     
     ## ϵ_A; PA × A → Ω
-    epsilon = CartesianEvaluationMorphismWithGivenSource( C,
+    epsilon = CartesianLeftEvaluationMorphismWithGivenSource( C,
                        A,
                        Omega,
                        PAxA );
@@ -285,12 +285,12 @@ InstallMethod( @__MODULE__,  RelativePowerObjectEvaluationMorphism,
 end );
 
 ##
-InstallMethod( @__MODULE__,  RelativePowerObjectEvaluationMorphism,
+InstallMethod( @__MODULE__,  RelativePowerObjectLeftEvaluationMorphism,
         "for a morphism",
         [ IsCapCategoryMorphism ],
         
  function( f )
     
-    return RelativePowerObjectEvaluationMorphism( CapCategory( f ), f );
+    return RelativePowerObjectLeftEvaluationMorphism( CapCategory( f ), f );
     
 end );

@@ -10,20 +10,6 @@
 ##
 ####################################
 
-####################################
-##
-#! @Section Morphisms of external Hom
-##
-####################################
-
-#! @Description
-#! The argument are two objects <A>a</A>, <A>b</A>.
-#! The output is a list of all morphisms from <A>a</A> to <A>b</A>.
-#! @Returns a list of morphisms in $\mathrm[Hom]( a, b )$
-#! @Arguments a, b
-@DeclareOperation( "MorphismsOfExternalHom",
-        [ IsCapCategoryObject, IsCapCategoryObject ] );
-
 ###################################
 ##
 #! @Section Exact cover with global elements
@@ -370,21 +356,21 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
 
 #! @Description
 #!  The argument is an object <A>a</A>.
-#!  The output is the power object evaluation morphism of $\epsilon_a: P(a) \times a \to \Omega$,
+#!  The output is the power object left evaluation morphism of $\epsilon_a: P(a) \times a \to \Omega$,
 #!  where $\Omega$ is the subobject classifier of <C>CapCategory</C>(<A>a</A>).
 #! @Arguments a
 #! @Returns a morphism in $\mathrm[Hom]( \mathrm[PowerObject](a) \times a, \Omega )$
-@DeclareAttribute( "PowerObjectEvaluationMorphism",
+@DeclareAttribute( "PowerObjectLeftEvaluationMorphism",
         IsCapCategoryObject );
 
 #! @Description
 #!  The arguments are three objects <A>Pa_xa</A>, <A>a</A>, and <A>Omega</A>,
 #!  such that <A>Pa_xa</A>$= P(a) \times a$ and
 #!  <A>Omega</A> the subobject classifier of <C>CapCategory</C>(<A>a</A>).
-#!  The output is the power object evaluation morphism of $\epsilon_a:$ <A>Pa_xa</A> $\to$ <A>Omega</A>.
+#!  The output is the power object left evaluation morphism of $\epsilon_a:$ <A>Pa_xa</A> $\to$ <A>Omega</A>.
 #! @Arguments Pa_xa, a, Omega
 #! @Returns a morphism in $\mathrm[Hom]( Pa_xa, Omega )$
-@DeclareOperation( "PowerObjectEvaluationMorphismWithGivenObjects",
+@DeclareOperation( "PowerObjectLeftEvaluationMorphismWithGivenObjects",
         [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject ] );
 
 #! @Description
@@ -502,30 +488,58 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
 
 #! @Description
 #!  The input is a morphism <A>f</A>: $a \to b$.
-#!  The output is the embedding of the relative power object $P_fA \hookrightarrow Pa \times b$,
+#!  The output is the embedding of the relative power object $P_fa \hookrightarrow Pa \times b$,
 #!  where $Pa$ == <C>PowerObject</C>($a$).
 #! @Arguments f
-#! @Returns a monomorphism $\mathrm[Hom]( P_fA, Pa \times b )$
+#! @Returns a monomorphism $\mathrm[Hom]( P_fa, Pa \times b )$
 @DeclareAttribute( "EmbeddingOfRelativePowerObject",
         IsCapCategoryMorphism );
 
 #! @Description
 #!  The input is a morphism <A>f</A>: $a \to b$.
-#!  The output is the fibration morphism $P_f: P_fA \rightarrow \times b$,
-#!  where is $P_fA$ the relative power object of <A>f</A>.
+#!  The output is the fibration morphism $P_f: P_fa \rightarrow \times b$,
+#!  where is $P_fa$ the relative power object of <A>f</A>.
 #! @Arguments f
-#! @Returns a monomorphism $\mathrm[Hom]( P_fA, b )$
+#! @Returns a monomorphism $\mathrm[Hom]( P_fa, b )$
 @DeclareAttribute( "RelativePowerObjectFibrationMorphism",
         IsCapCategoryMorphism );
 
 #! @Description
 #!  The input is a morphism <A>f</A>: $a \to b$.
-#!  The output is the evaluation morphism $P_fA \times a \rightarrow \Omega \times b$,
-#!  where $Pa$ == <C>PowerObject</C>($a$) and $P_fA$ is the relative power object of <A>f</A>.
+#!  The output is the evaluation morphism $P_fa \times a \rightarrow \Omega \times b$,
+#!  where $Pa$ == <C>PowerObject</C>($a$) and $P_fa$ is the relative power object of <A>f</A>.
 #! @Arguments f
-#! @Returns a monomorphism $\mathrm[Hom]( P_fA \times a, \Omega \times b )$
-@DeclareAttribute( "RelativePowerObjectEvaluationMorphism",
+#! @Returns a monomorphism $\mathrm[Hom]( P_fa \times a, \Omega \times b )$
+@DeclareAttribute( "RelativePowerObjectLeftEvaluationMorphism",
         IsCapCategoryMorphism );
+
+#! @Description
+#!  The arguments are two objects <A>b</A>, <A>c</A>.
+#!  The output is the morphism <C>PowerObject</C>(b \times c) $\times$ <A>b</A> $\to$ <C>PowerObject</C>( <A>c</A> )
+#!  that for a given relation $R \subseteq$ <A>b</A> $\times$ <A>c</A>
+#!  and an element $y$ in the base <A>b</A> computes the fiber of $y$ as subset of <A>c</A>.
+#! @Returns a morphism in $\mathrm[Hom]( P(b \times c) \times b, Pc )$
+#! @Arguments b, c
+@DeclareOperation( "FiberMorphism",
+        [ IsCapCategoryObject, IsCapCategoryObject ] );
+
+#! @Description
+#!  The arguments are four objects <A>Pbxc_xb</A>, <A>b</A>, <A>c</A>, <A>Pc</A>,
+#!  where <A>Pbxc_xb</A> == $P(b \times c) \times b$ and <A>Pc</A> == <C>PowerObject</C>( <A>c</A> ).
+#!  The output is the morphism that for a given relation $R \subseteq$ <A>b</A> $\times$ <A>c</A>
+#!  and an element $y$ in the base <A>b</A> computes the fiber of $y$ as subset of <A>c</A>.
+#! @Returns a morphism in $\mathrm[Hom]( Pbxc_xb, Pc )$
+#! @Arguments Pbxc_xb, b, c, Pc
+@DeclareOperation( "FiberMorphismWithGivenObjects",
+        [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject ] );
+
+#! @Description
+#!  Return the morphism that for a given relation $R \subseteq$ <A>b</A> $\times$ <A>c</A>
+#!  computes the subset of <A>b</A> over which $R$ is a singleton.
+#! @Returns a morphism in $\mathrm[Hom]( Pbxc, Pb )$
+#! @Arguments Pbxc, b, c, Pb
+@DeclareOperation( "SingletonSupportOfRelationsWithGivenObjects",
+        [ IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject ] );
 
 ####################################
 ##

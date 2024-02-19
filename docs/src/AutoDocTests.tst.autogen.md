@@ -256,7 +256,7 @@ julia> h = p[1]
 julia> p = p[2]
 <A morphism in FinSets>
 
-julia> H = Range( p );
+julia> H = Target( p );
 
 julia> Length( H )
 7
@@ -305,6 +305,6 @@ julia> op = Opposite( SkeletalFinSets )
 Opposite( SkeletalFinSets )
 
 julia> Display( ListKnownCategoricalProperties( op ) )
-[ "IsBicartesianCategory", "IsBicartesianCoclosedCategory", "IsCartesianCategory", "IsCocartesianCategory", "IsCocartesianCoclosedCategory", "IsCodistributiveCategory", "IsEquippedWithHomomorphismStructure", "IsFiniteCocompleteCategory", "IsFiniteCompleteCategory", "IsSkeletalCategory" ]
+[ "IsBicartesianCategory", "IsBicartesianCoclosedCategory", "IsCartesianCategory", "IsCategoryWithDecidableColifts", "IsCategoryWithDecidableLifts", "IsCocartesianCategory", "IsCocartesianCoclosedCategory", "IsCodistributiveCategory", "IsEquippedWithHomomorphismStructure", "IsFiniteCocompleteCategory", "IsFiniteCompleteCategory", "IsSkeletalCategory" ]
 
 ```
