@@ -17,6 +17,4 @@ push!(ModulesForEvaluationStack, Toposes)
 
 include("init.jl")
 
-pop!(ModulesForEvaluationStack)
-
 end # module Toposes
