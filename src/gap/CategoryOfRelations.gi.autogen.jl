@@ -12,7 +12,7 @@
 ## S   T
 
 ##
-InstallMethod( @__MODULE__,  PseudoInverse,
+@InstallMethod( PseudoInverse,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
@@ -32,7 +32,7 @@ InstallMethod( @__MODULE__,  PseudoInverse,
 end );
 
 ##
-InstallMethod( @__MODULE__,  PseudoInverseOfHonestMorphism,
+@InstallMethod( PseudoInverseOfHonestMorphism,
         "for a category of relations and a morphism in the underlying category",
         [ IsCategoryOfRelations, IsCapCategoryMorphism ],
         
@@ -43,7 +43,7 @@ InstallMethod( @__MODULE__,  PseudoInverseOfHonestMorphism,
 end );
 
 ##
-InstallMethod( @__MODULE__,  EmbeddingOfRelationInDirectProduct,
+@InstallMethod( EmbeddingOfRelationInDirectProduct,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
@@ -63,7 +63,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfRelationInDirectProduct,
 end );
 
 ##
-InstallMethod( @__MODULE__,  SourceProjection,
+@InstallMethod( SourceProjection,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
@@ -83,7 +83,7 @@ InstallMethod( @__MODULE__,  SourceProjection,
 end );
 
 ##
-InstallMethod( @__MODULE__,  RangeProjection,
+@InstallMethod( RangeProjection,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
@@ -103,7 +103,7 @@ InstallMethod( @__MODULE__,  RangeProjection,
 end );
 
 ##
-InstallMethod( @__MODULE__,  StandardizedSpan,
+@InstallMethod( StandardizedSpan,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
@@ -116,7 +116,7 @@ InstallMethod( @__MODULE__,  StandardizedSpan,
 end );
 
 ##
-InstallMethod( @__MODULE__,  MorphismByStandardizedSpan,
+@InstallMethod( MorphismByStandardizedSpan,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
@@ -134,7 +134,7 @@ end );
 ## this is equivalent to saying that the domain of the morphism
 ## (=source leg of the standardized span) is an isomorphism in C
 ##
-InstallMethod( @__MODULE__,  IsHonest,
+@InstallMethod( IsHonest,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
         
@@ -145,7 +145,7 @@ InstallMethod( @__MODULE__,  IsHonest,
 end );
 
 ##
-InstallMethod( @__MODULE__,  HonestRepresentative,
+@InstallMethod( HonestRepresentative,
         "for a category of relations and a morphism in the category of relations",
         [ IsCategoryOfRelations, IsMorphismInCategoryOfRelations ],
 
@@ -159,7 +159,7 @@ InstallMethod( @__MODULE__,  HonestRepresentative,
 end );
 
 ##
-InstallMethod( @__MODULE__,  CategoryOfRelations,
+@InstallMethod( CategoryOfRelations,
         [ IsCapCategory ],
         
   function( C )
@@ -407,7 +407,7 @@ InstallMethod( @__MODULE__,  CategoryOfRelations,
 end );
 
 ##
-InstallMethod( @__MODULE__,  /,
+@InstallMethod( /,
         "for an object in the underlying category and a category of relations",
         [ IsCapCategoryObject, IsCategoryOfRelations ],
         
@@ -420,7 +420,7 @@ InstallMethod( @__MODULE__,  /,
 end );
 
 ##
-InstallMethod( @__MODULE__,  AsMorphismInCategoryOfRelations,
+@InstallMethod( AsMorphismInCategoryOfRelations,
         "for a category of relations and a morphism in the underlying category",
         [ IsCategoryOfRelations, IsCapCategoryMorphism ],
         
@@ -447,7 +447,7 @@ InstallMethod( @__MODULE__,  AsMorphismInCategoryOfRelations,
 end );
 
 ##
-InstallMethod( @__MODULE__,  UnitObjectInCategoryOfRelations,
+@InstallMethod( UnitObjectInCategoryOfRelations,
         "for a category of relations",
         [ IsCategoryOfRelations ],
         
@@ -458,7 +458,7 @@ InstallMethod( @__MODULE__,  UnitObjectInCategoryOfRelations,
 end );
 
 ##
-InstallMethod( @__MODULE__,  MaximalRelationIntoTerminalObject,
+@InstallMethod( MaximalRelationIntoTerminalObject,
         "for a category of relations and for an object in the underlying category",
         [ IsCategoryOfRelations, IsObjectInCategoryOfRelations ],
         
@@ -485,7 +485,7 @@ end );
 ##################################
 
 ##
-InstallMethod( @__MODULE__,  ViewString,
+@InstallMethod( ViewString,
         [ IsObjectInCategoryOfRelations ],
         
   function( a )
@@ -495,7 +495,7 @@ InstallMethod( @__MODULE__,  ViewString,
 end );
 
 ##
-InstallMethod( @__MODULE__,  DisplayString,
+@InstallMethod( DisplayString,
         [ IsObjectInCategoryOfRelations ],
         
   function( a )

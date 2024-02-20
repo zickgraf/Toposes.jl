@@ -5,7 +5,7 @@
 #
 
 ##
-InstallMethod( @__MODULE__,  DPO,
+@InstallMethod( DPO,
         [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
         
   function( m, l, r )

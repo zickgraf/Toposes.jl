@@ -1094,7 +1094,7 @@ CAP_INTERNAL_ADD_REPLACEMENTS_FOR_METHOD_RECORD(
                [ "PTransposeMorphismWithGivenRange", 1 ] ] ) );
 
 ##
-InstallMethod( @__MODULE__,  SingletonSupportOfRelationsWithGivenObjects,
+@InstallMethod( SingletonSupportOfRelationsWithGivenObjects,
         "for a category and four category objects",
         [ IsCapCategory, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject ],
         

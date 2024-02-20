@@ -9,7 +9,7 @@ InstallTrueMethod( IsFiniteCocompleteCategory, IsElementaryTopos );
 InstallTrueMethod( IsBicartesianClosedCategory, IsElementaryTopos );
 
 ## MacLane-Moerdijk, Proof of Thm IV.7.1, page 192, diagram (5)
-InstallMethod( @__MODULE__,  IntersectWithPreimagesWithGivenObjects,
+@InstallMethod( IntersectWithPreimagesWithGivenObjects,
         "for a category, two objects, and a morphism",
         [ IsCapCategory, IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ],
         
@@ -59,7 +59,7 @@ InstallMethod( @__MODULE__,  IntersectWithPreimagesWithGivenObjects,
 end );
 
 ##
-InstallMethod( @__MODULE__,  IntersectWithPreimagesWithGivenObjects,
+@InstallMethod( IntersectWithPreimagesWithGivenObjects,
         "for two objects and a morphism",
         [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject ],
         
@@ -70,7 +70,7 @@ InstallMethod( @__MODULE__,  IntersectWithPreimagesWithGivenObjects,
 end );
 
 ## MacLane-Moerdijk, Proof of Thm IV.7.1, page 192, diagram (5)
-InstallMethod( @__MODULE__,  EmbeddingOfRelativePowerObject,
+@InstallMethod( EmbeddingOfRelativePowerObject,
         "for a category and a morphism",
         [ IsCapCategory, IsCapCategoryMorphism ],
         
@@ -111,7 +111,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfRelativePowerObject,
 end );
 
 ##
-InstallMethod( @__MODULE__,  EmbeddingOfRelativePowerObject,
+@InstallMethod( EmbeddingOfRelativePowerObject,
         "for a morphism",
         [ IsCapCategoryMorphism ],
         
@@ -122,7 +122,7 @@ InstallMethod( @__MODULE__,  EmbeddingOfRelativePowerObject,
 end );
 
 ##
-InstallMethod( @__MODULE__,  RelativePowerObjectFibrationMorphism,
+@InstallMethod( RelativePowerObjectFibrationMorphism,
         "for a category and a morphism",
         [ IsCapCategory, IsCapCategoryMorphism ],
         
@@ -149,7 +149,7 @@ InstallMethod( @__MODULE__,  RelativePowerObjectFibrationMorphism,
 end );
 
 ##
-InstallMethod( @__MODULE__,  RelativePowerObjectFibrationMorphism,
+@InstallMethod( RelativePowerObjectFibrationMorphism,
         "for a morphism",
         [ IsCapCategoryMorphism ],
         
@@ -160,7 +160,7 @@ InstallMethod( @__MODULE__,  RelativePowerObjectFibrationMorphism,
 end );
 
 ##
-InstallMethod( @__MODULE__,  RelativePowerObjectLeftEvaluationMorphism,
+@InstallMethod( RelativePowerObjectLeftEvaluationMorphism,
         "for a category and a morphism",
         [ IsCapCategory, IsCapCategoryMorphism ],
         
@@ -285,7 +285,7 @@ InstallMethod( @__MODULE__,  RelativePowerObjectLeftEvaluationMorphism,
 end );
 
 ##
-InstallMethod( @__MODULE__,  RelativePowerObjectLeftEvaluationMorphism,
+@InstallMethod( RelativePowerObjectLeftEvaluationMorphism,
         "for a morphism",
         [ IsCapCategoryMorphism ],
         

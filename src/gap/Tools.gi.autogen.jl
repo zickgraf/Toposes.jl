@@ -4,10 +4,11 @@
 # Implementations
 #
 
+#= comment for Julia
 if (IsPackageMarkedForLoading( "Digraphs", ">= 1.3.1" ))
 
 ##
-InstallMethod( @__MODULE__,  DigraphOfSubobjects,
+@InstallMethod( DigraphOfSubobjects,
                [ IsCapCategoryObject ],
                
   function( A )
@@ -27,7 +28,7 @@ InstallMethod( @__MODULE__,  DigraphOfSubobjects,
 end );
 
 ##
-InstallMethod( @__MODULE__,  DotVertexLabelledDigraph,
+@InstallMethod( DotVertexLabelledDigraph,
         [ IsDigraphByOutNeighboursRep && IsDigraphOfSubobjects ],
 
   function( D )
@@ -62,3 +63,4 @@ InstallMethod( @__MODULE__,  DotVertexLabelledDigraph,
 end );
 
 end;
+# =#
