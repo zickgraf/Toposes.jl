@@ -4,7 +4,7 @@ julia> true
 true
 
 julia> Length( ListInstalledOperationsOfCategory( SkeletalFinSets ) )
-336
+342
 
 julia> BooleanAlgebras = Opposite( SkeletalFinSets )
 Opposite( SkeletalFinSets )
@@ -25,4 +25,4 @@ julia> Length( ListPrimitivelyInstalledOperationsOfCategory( FS ) )
 259
 
 julia> Length( ListInstalledOperationsOfCategory( FS ) )
-277
+279
