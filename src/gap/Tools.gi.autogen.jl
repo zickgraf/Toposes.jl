@@ -50,16 +50,16 @@ end );
         Append( str, "\" fontsize=12 margin=0.01 fontname=\"DejaVu Serif,serif\"]\n" );
     end;
     
-  for i in DigraphVertices( D )
-      for j in out[i]
-          Append( str, @Concatenation( StringGAP( i ), " -> ", StringGAP( j ), " [arrowsize=0.5]\n" ) );
-      end;
-  end;
-  
-  Append( str, "]\n" );
-  
-  return str;
-  
+    for i in DigraphVertices( D )
+        for j in out[i]
+            Append( str, @Concatenation( StringGAP( i ), " -> ", StringGAP( j ), " [arrowsize=0.5]\n" ) );
+        end;
+    end;
+    
+    Append( str, "]\n" );
+    
+    return str;
+    
 end );
 
 end;
