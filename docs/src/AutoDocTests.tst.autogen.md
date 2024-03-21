@@ -28,7 +28,10 @@ julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
 julia> true
 true
 
-julia> a = FinSet( 3 )
+julia> sFinSets = SkeletalCategoryOfFiniteSets(; no_precompiled_code = true )
+SkeletalFinSets
+
+julia> a = BigInt( 3 ) / sFinSets
 |3|
 
 julia> sa = SingletonMorphism( a )
@@ -36,6 +39,9 @@ julia> sa = SingletonMorphism( a )
 
 julia> Display( sa )
 [ 0, 1, 2 ] ⱶ[ 1, 2, 4 ]→ [ 0,..., 7 ]
+
+julia> sa == UpperSegmentOfRelation( a, a, CartesianDiagonal( a, 2 ) )
+true
 
 julia> sa == LowerSegmentOfRelation( a, a, CartesianDiagonal( a, 2 ) )
 true
@@ -289,22 +295,5 @@ julia> LTC = LawvereTierneyEmbeddingsOfSubobjectClassifiers( SkeletalFinSets );
 julia> Perform( LTC, Display )
 [ 0, 1 ] ⱶ[ 0, 1 ]→ [ 0, 1 ]
 [ 0 ] ⱶ[ 1 ]→ [ 0, 1 ]
-
-```
-
-```jldoctest AutoDocTests
-julia> using CAP; using CartesianCategories; using FinSetsForCAP; using Toposes
-
-julia> true
-true
-
-julia> true
-true
-
-julia> op = Opposite( SkeletalFinSets )
-Opposite( SkeletalFinSets )
-
-julia> Display( ListKnownCategoricalProperties( op ) )
-[ "IsBicartesianCategory", "IsBicartesianCoclosedCategory", "IsCartesianCategory", "IsCategoryWithDecidableColifts", "IsCategoryWithDecidableLifts", "IsCocartesianCategory", "IsCocartesianCoclosedCategory", "IsCodistributiveCategory", "IsEquippedWithHomomorphismStructure", "IsFiniteCocompleteCategory", "IsFiniteCompleteCategory", "IsSkeletalCategory" ]
 
 ```
