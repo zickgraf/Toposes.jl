@@ -25,3 +25,13 @@
                   [ IsCapCategoryObject ] );
 
 @DeclareFilter( "IsDigraphOfSubobjects" );
+
+#= comment for Julia
+if (IsPackageMarkedForLoading( "Digraphs", ">= 1.3.1" ))
+
+#! @Arguments digraph
+@DeclareAttribute( "SvgString",
+        IsDigraph && IsDigraphOfSubobjects );
+
+end;
+# =#

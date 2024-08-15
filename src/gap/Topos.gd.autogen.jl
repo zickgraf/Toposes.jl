@@ -132,16 +132,16 @@ DeclareGlobalVariable( "TOPOS_METHOD_NAME_RECORD" );
 AddCategoricalProperty( [ "IsElementaryTopos", fail ] );
 
 CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
-  DuplicateFreeList( SortedList(
-          @Concatenation( [
-                  "SubobjectClassifier",
-                  "ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier",
-                  #"TruthMorphismOfTrueWithGivenObjects", ## derived from SubobjectClassifier & ClassifyingMorphismOfSubobjectWithGiven... & IdentityMorphism
-                  "SubobjectOfClassifyingMorphism", ## can be derived from SubobjectClassifier & TruthMorphismOfTrueWithGivenObjects & ProjectionInFactorOfFiberProduct
-                  ],
+  DuplicateFreeList(
+          @Concatenation(
                   CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsCartesianClosedCategory,
                   CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsFiniteBicompleteCategory,
-                  CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsDistributiveCategory ) ) );
+                  CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsDistributiveCategory,
+                  [ "SubobjectClassifier",
+                    "ClassifyingMorphismOfSubobjectWithGivenSubobjectClassifier",
+                    #"TruthMorphismOfTrueWithGivenObjects", ## derived from SubobjectClassifier & ClassifyingMorphismOfSubobjectWithGiven... & IdentityMorphism
+                    "SubobjectOfClassifyingMorphism", ## can be derived from SubobjectClassifier & TruthMorphismOfTrueWithGivenObjects & ProjectionInFactorOfFiberProduct
+                    ] ) );
 
 #! A subobject classifier consists of three parts:
 #! * an object $\Omega$,
@@ -547,7 +547,7 @@ CAP_INTERNAL_CONSTRUCTIVE_CATEGORIES_RECORD.IsElementaryTopos =
 #! @Description
 #!  The input is a morphism <A>f</A>: $a \to b$.
 #!  The output is the evaluation morphism $P_fa \times a \rightarrow \Omega \times b$,
-#!  where $Pa$ == <C>PowerObject</C>($a$) and $P_fa$ is the relative power object of <A>f</A>.
+#!  where $P_fa$ is the relative power object of <A>f</A>.
 #! @Arguments f
 #! @Returns a monomorphism $\mathrm[Hom]( P_fa \times a, \Omega \times b )$
 @DeclareAttribute( "RelativePowerObjectLeftEvaluationMorphism",
